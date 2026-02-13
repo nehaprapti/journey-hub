@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const steps = [
   { step: "01", title: "Register for the Hackathon", color: "primary" },
@@ -17,93 +19,139 @@ const timeline = [
   { event: "Learning Phase Begins", date: "Nov 10, 2025", color: "secondary" },
   { event: "Learning Phase Ends", date: "Jan 11, 2026", color: "primary" },
   { event: "Problem Statement Reveal", date: "Jan 13, 2026", color: "secondary" },
-  { event: "Idea Submission Phase Begins", date: "Jan 13, 2026", color: "primary" },
+  { event: "Idea Submission Begins", date: "Jan 13, 2026", color: "primary" },
   { event: "Registrations Close", date: "Feb 15, 2026", color: "secondary" },
-  { event: "Idea Submission Phase Ends", date: "Feb 15, 2026", color: "primary" },
-  { event: "Initial Shortlist Announcement", date: "Mar 3, 2026", color: "secondary" },
+  { event: "Idea Submission Ends", date: "Feb 15, 2026", color: "primary" },
+  { event: "Initial Shortlist", date: "Mar 3, 2026", color: "secondary" },
   { event: "Prototype Submission Ends", date: "Mar 12, 2026", color: "primary" },
-  { event: "Final Shortlist Announcement", date: "Apr 1, 2026", color: "secondary" },
+  { event: "Final Shortlist", date: "Apr 1, 2026", color: "secondary" },
   { event: "Winner Announcement", date: "Apr 8, 2026", color: "primary" },
 ];
 
 const JourneySection = () => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start end", "end start"],
+  });
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section id="journey" className="section-padding bg-muted/30">
-      <div className="container mx-auto">
-        <motion.h2
+    <section id="journey" className="section-padding relative overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/3 blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-secondary/3 blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto relative z-10">
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-bold mb-16 text-center"
+          className="text-center mb-16"
         >
-          What will your <span className="text-gradient-green">journey</span> look like?
-        </motion.h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border mb-6 text-xs font-mono text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            YOUR PATH
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold">
+            What will your <span className="text-gradient-green">journey</span> look like?
+          </h2>
+        </motion.div>
 
-        {/* Steps */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+        {/* Steps - horizontal scroll on mobile */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-28">
           {steps.map((s, i) => (
             <motion.div
               key={s.step}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 25, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="glass-card p-6 flex items-start gap-4 group hover:border-primary/40 transition-all"
+              transition={{ delay: i * 0.06, type: "spring", stiffness: 200 }}
             >
-              <span className={`text-2xl font-bold font-mono ${
-                s.color === "primary" ? "text-primary" : "text-secondary"
-              }`}>
-                {s.step}
-              </span>
-              <span className="text-foreground font-medium pt-1">{s.title}</span>
+              <SpotlightCard className="p-6 flex items-center gap-4 group hover:border-primary/40 transition-all cursor-default">
+                <span className={`text-3xl font-bold font-mono leading-none ${
+                  s.color === "primary" ? "text-primary" : "text-secondary"
+                } group-hover:scale-110 transition-transform duration-300`}>
+                  {s.step}
+                </span>
+                <div className="h-8 w-px bg-border" />
+                <span className="text-foreground font-medium text-sm">{s.title}</span>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>
 
         {/* Timeline */}
-        <motion.h3
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-2xl md:text-4xl font-bold mb-12 text-center"
+          className="text-center mb-14"
         >
-          Hackathon <span className="text-gradient-purple">Timeline</span>
-        </motion.h3>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border mb-6 text-xs font-mono text-muted-foreground">
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+            TIMELINE
+          </div>
+          <h3 className="text-2xl md:text-4xl font-bold">
+            Hackathon <span className="text-gradient-purple">Timeline</span>
+          </h3>
+        </motion.div>
 
-        <div className="relative max-w-2xl mx-auto">
-          {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border" />
+        <div ref={timelineRef} className="relative max-w-3xl mx-auto">
+          {/* Static line */}
+          <div className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[2px] bg-border/30" />
+          {/* Animated fill line */}
+          <motion.div
+            className="absolute left-6 md:left-1/2 md:-translate-x-px top-0 w-[2px] bg-gradient-to-b from-primary via-secondary to-primary"
+            style={{ height: lineHeight }}
+          />
 
-          {timeline.map((item, i) => (
-            <motion.div
-              key={`${item.event}-${i}`}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className={`relative flex items-center gap-4 mb-8 ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } flex-row`}
-            >
-              {/* Dot */}
-              <div className={`absolute left-4 md:left-1/2 w-3 h-3 rounded-full -translate-x-1/2 z-10 ${
-                item.color === "primary" ? "bg-primary" : "bg-secondary"
-              }`} />
+          {timeline.map((item, i) => {
+            const isLeft = i % 2 === 0;
+            return (
+              <motion.div
+                key={`${item.event}-${i}`}
+                initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                className="relative flex items-center mb-10 group"
+              >
+                {/* Dot */}
+                <div className={`absolute left-6 md:left-1/2 -translate-x-1/2 z-10`}>
+                  <div className={`w-4 h-4 rounded-full border-2 transition-all duration-300 ${
+                    item.color === "primary"
+                      ? "border-primary bg-background group-hover:bg-primary group-hover:shadow-[0_0_12px_rgba(74,222,128,0.5)]"
+                      : "border-secondary bg-background group-hover:bg-secondary group-hover:shadow-[0_0_12px_rgba(167,139,250,0.5)]"
+                  }`} />
+                </div>
 
-              {/* Content */}
-              <div className={`ml-10 md:ml-0 md:w-1/2 ${
-                i % 2 === 0 ? "md:pr-10 md:text-right" : "md:pl-10"
-              }`}>
-                <p className="text-sm font-semibold text-foreground">{item.event}</p>
-                <p className="text-xs text-muted-foreground font-mono">{item.date}</p>
-              </div>
-            </motion.div>
-          ))}
+                {/* Content */}
+                <div className={`ml-14 md:ml-0 md:w-1/2 ${
+                  isLeft ? "md:pr-12 md:text-right" : "md:pl-12 md:ml-auto"
+                }`}>
+                  <div className={`glass-card p-4 inline-block transition-all duration-300 ${
+                    item.color === "primary" ? "group-hover:border-primary/40" : "group-hover:border-secondary/40"
+                  }`}>
+                    <p className="text-sm font-semibold text-foreground">{item.event}</p>
+                    <p className={`text-xs font-mono mt-1 ${
+                      item.color === "primary" ? "text-primary" : "text-secondary"
+                    }`}>{item.date}</p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <p className="text-center text-xs text-muted-foreground mt-8">
-          *Please note that the timeline is tentative and may be subject to change.
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-xs text-muted-foreground mt-10 font-mono"
+        >
+          * Timeline is tentative and may be subject to change.
+        </motion.p>
       </div>
     </section>
   );
