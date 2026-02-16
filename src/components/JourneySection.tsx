@@ -4,28 +4,14 @@ import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const steps = [
   { step: "01", title: "Register for the Hackathon", color: "primary" },
-  { step: "02", title: "Form Your Team for Hackathon", color: "secondary" },
-  { step: "03", title: "Attend Live Workshops", color: "primary" },
-  { step: "04", title: "Select a Problem Statement", color: "secondary" },
-  { step: "05", title: "Submit Your Idea", color: "primary" },
-  { step: "06", title: "Wait for Shortlist Announcement", color: "secondary" },
-  { step: "07", title: "Build & Submit Your Prototype", color: "primary" },
-  { step: "08", title: "Wait for Final Shortlist", color: "secondary" },
-  { step: "09", title: "Grand Finale", color: "primary" },
+  { step: "02", title: "Idea confirmation End Date", color: "secondary" },
+  { step: "03", title: "Grand Finale", color: "primary" },
 ];
 
 const timeline = [
-  { event: "Registrations Begin", date: "Nov 10, 2025", color: "primary" },
-  { event: "Learning Phase Begins", date: "Nov 10, 2025", color: "secondary" },
-  { event: "Learning Phase Ends", date: "Jan 11, 2026", color: "primary" },
-  { event: "Problem Statement Reveal", date: "Jan 13, 2026", color: "secondary" },
-  { event: "Idea Submission Begins", date: "Jan 13, 2026", color: "primary" },
-  { event: "Registrations Close", date: "Feb 15, 2026", color: "secondary" },
-  { event: "Idea Submission Ends", date: "Feb 15, 2026", color: "primary" },
-  { event: "Initial Shortlist", date: "Mar 3, 2026", color: "secondary" },
-  { event: "Prototype Submission Ends", date: "Mar 12, 2026", color: "primary" },
-  { event: "Final Shortlist", date: "Apr 1, 2026", color: "secondary" },
-  { event: "Winner Announcement", date: "Apr 8, 2026", color: "primary" },
+  { event: "Registrations Begin", date: "Feb 16, 2026", color: "primary" },
+  { event: "Idea confirmation End Date", date: "Mar 20, 2026", color: "secondary" },
+  { event: "Grand Finale", date: "Mar 28, 2026", color: "primary" },
 ];
 
 const JourneySection = () => {

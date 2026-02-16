@@ -4,15 +4,41 @@ import TiltCard from "@/components/effects/TiltCard";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const committee = [
-  { name: "Hack2skill Team", role: "Organizing Partner", desc: "Platform & event management", gradient: "from-primary to-primary/50" },
-  { name: "AWS Experts", role: "Technical Mentors", desc: "Workshops, judging & mentorship", gradient: "from-secondary to-secondary/50" },
-  { name: "Industry Leaders", role: "Judges Panel", desc: "Evaluating innovation & impact", gradient: "from-primary to-secondary" },
-  { name: "Community Partners", role: "Outreach & Support", desc: "Developer community engagement", gradient: "from-secondary to-primary" },
+  {
+    group: "Organization Committee",
+    items: [
+      { name: "Dr.J.Akilandeswari", role: "Convener" },
+    ],
+  },
+  {
+    group: "Coordinators",
+    items: [
+      { name: "Dr.V.Mohanraj" },
+      { name: "Dr.J.Senthilkumar" },
+      { name: "Dr.Y.Suresh" },
+      { name: "Dr.P.Shanmugaraja" },
+      { name: "Dr. S. Vasanthi" },
+    ],
+  },
+  {
+    group: "Co-coordinators",
+    items: [
+      { name: "Mr. R. Krishna Prakash" },
+      { name: "Mr. P. Dineshkumar" },
+      { name: "Mrs. M. Parameswari" },
+    ],
+  },
+  {
+    group: "Organizers",
+    items: [
+      { name: "IT Department - All Faculty Members", role: "" },
+    ],
+  },
 ];
 
 const CommitteeSection = () => {
   return (
-    <section id="committee" className="section-padding relative overflow-hidden">
+    <section id="committee" className="section-padding relative overflow-hidden pt-2 md:pt-4">
       <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-secondary/3 blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto relative z-10">
@@ -34,27 +60,26 @@ const CommitteeSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {committee.map((m, i) => (
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {committee.map((group, gi) => (
             <motion.div
-              key={m.name}
+              key={group.group}
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.12, type: "spring" }}
+              transition={{ delay: gi * 0.08, type: "spring" }}
             >
               <TiltCard>
-                <SpotlightCard className="p-8 text-center h-full group">
-                  {/* Avatar with gradient ring */}
-                  <div className="relative w-20 h-20 mx-auto mb-6">
-                    <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${m.gradient} opacity-30 group-hover:opacity-60 transition-opacity blur-sm`} />
-                    <div className="relative w-full h-full rounded-full bg-card border border-border flex items-center justify-center group-hover:border-secondary/40 transition-all">
-                      <User size={30} className="text-muted-foreground group-hover:text-secondary transition-colors" />
-                    </div>
-                  </div>
-                  <h4 className="font-semibold text-foreground mb-1">{m.name}</h4>
-                  <p className="text-xs text-primary font-mono mb-3">{m.role}</p>
-                  <p className="text-sm text-muted-foreground">{m.desc}</p>
+                <SpotlightCard className="p-6 h-full group text-left">
+                  <h4 className="font-semibold text-foreground mb-3">{group.group}</h4>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    {group.items.map((it, i) => (
+                      <li key={i} className="">
+                        <span className="font-medium text-foreground">{it.name}</span>
+                        {it.role && <span className="text-xs text-muted-foreground block">{it.role}</span>}
+                      </li>
+                    ))}
+                  </ul>
                 </SpotlightCard>
               </TiltCard>
             </motion.div>

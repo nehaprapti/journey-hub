@@ -6,11 +6,10 @@ import AnimatedGrid from "@/components/effects/AnimatedGrid";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const stats = [
-  { icon: Users, label: "1-4 Team Members" },
-  { icon: Clock, label: "Age 18+" },
-  { icon: MapPin, label: "India" },
-  { icon: Wifi, label: "Online" },
-  { icon: Trophy, label: "INR 40 Lakhs Prize Pool" },
+  { icon: Users, label: "3 Members per team" },
+  { icon: MapPin, label: "Sona College of Technology,Salem" },
+  { icon: Wifi, label: "Offline" },
+  { icon: Trophy, label: "INR 50k Prize Pool" },
 ];
 
 const HeroSection = () => {
@@ -49,8 +48,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight"
         >
-          <span className="text-foreground">AI for </span>
-          <span className="text-gradient-green">Bharat</span>
+          <span className="text-foreground">TechZeal </span>
+          <span className="text-gradient-green">'26</span>
         </motion.h1>
 
         <motion.div

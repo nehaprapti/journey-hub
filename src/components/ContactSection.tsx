@@ -1,29 +1,22 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Mail, MessageSquare, ExternalLink, ArrowRight } from "lucide-react";
+import { Mail, MessageSquare, ExternalLink, ArrowRight, Phone } from "lucide-react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const contacts = [
   {
-    icon: Mail,
-    title: "Email",
-    detail: "support@hack2skill.com",
-    href: "mailto:support@hack2skill.com",
+    icon: Phone,
+    title: "Thirumalai R",
+    detail: "AIDS Secretary",
+    href: "tel:9042170454",
     color: "primary" as const,
   },
   {
-    icon: MessageSquare,
-    title: "Discord",
-    detail: "Join our community",
-    href: "https://discord.gg/hack2skill",
+    icon: Phone,
+    title: "Deepak Kumar V",
+    detail: "IT Secretary",
+    href: "tel:8248159309",
     color: "secondary" as const,
-  },
-  {
-    icon: ExternalLink,
-    title: "Portal",
-    detail: "Official hackathon page",
-    href: "https://vision.hack2skill.com/event/ai-for-bharat",
-    color: "primary" as const,
   },
 ];
 

@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold text-gradient-green font-mono mb-3">AI for Bharat</h3>
+            <h3 className="text-xl font-bold text-gradient-green font-mono mb-3">TechZeal '26</h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               A nationwide program bringing together India's brightest developers to learn, innovate, and transform India's AI landscape.
             </p>
@@ -51,7 +51,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border/50">
           <p className="text-xs text-muted-foreground">
-            AI for Bharat is a third-party program organized by Hack2skill with sponsorship support from AWS.
+            TechZeal '26 is a program organized by Department of Information Technology with sponsorship support from MongoDB, ICT Academy. All rights reserved.
           </p>
           <button
             onClick={scrollToTop}
