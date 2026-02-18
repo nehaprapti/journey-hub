@@ -1,21 +1,20 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageSquare, ExternalLink, ArrowRight, Phone } from "lucide-react";
-import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const contacts = [
-  {
-    icon: Phone,
-    title: "Thirumalai R",
-    detail: "AIDS Secretary",
-    href: "tel:9042170454",
-    color: "primary" as const,
-  },
   {
     icon: Phone,
     title: "Deepak Kumar V",
     detail: "IT Secretary",
     href: "tel:8248159309",
+    color: "primary" as const,
+  },
+  {
+    icon: Phone,
+    title: " Thirumalai R",
+    detail: "AIDS Secretary",
+    href: "tel:9042170454",
     color: "secondary" as const,
   },
 ];
@@ -26,7 +25,7 @@ const ContactSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
 
       <div className="container mx-auto relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -44,54 +43,56 @@ const ContactSection = () => {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-3 gap-6 mb-14">
-            {contacts.map((c, i) => (
-              <motion.a
-                key={c.title}
-                href={c.href}
-                target={c.href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group"
-              >
-                <SpotlightCard className={`p-8 flex flex-col items-center gap-4 h-full hover:border-${c.color}/40 transition-all`}>
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                    c.color === "primary"
-                      ? "bg-primary/10 text-primary group-hover:bg-primary/20 group-hover:shadow-[0_0_20px_rgba(74,222,128,0.2)]"
-                      : "bg-secondary/10 text-secondary group-hover:bg-secondary/20 group-hover:shadow-[0_0_20px_rgba(167,139,250,0.2)]"
-                  }`}>
-                    <c.icon size={24} />
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+            {contacts.map((c, i) => {
+              const phoneRaw = c.href.replace(/^tel:/, "");
+              const formatted = phoneRaw.replace(/^(\+\d{2})(\d{5})(\d{4})$/, "$1 $2 $3");
+              const initial = c.title?.trim()?.charAt(0) ?? "?";
+
+              return (
+                <motion.div
+                  key={c.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06 }}
+                >
+                  <div className={`glass-card p-8 h-full rounded-xl flex flex-col justify-between transition-all duration-300 group ${c.color === "primary"
+                      ? "hover:border-primary/30 hover:shadow-[0_0_24px_hsl(142_60%_55%/0.08)]"
+                      : "hover:border-secondary/30 hover:shadow-[0_0_24px_hsl(262_60%_65%/0.08)]"
+                    }`}>
+                    <div>
+                      <div className="flex items-center gap-4">
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold font-mono transition-transform duration-300 group-hover:scale-105 ${c.color === "primary"
+                            ? "bg-primary/15 text-primary border border-primary/40 shadow-[0_0_18px_hsl(142_60%_55%/0.2)]"
+                            : "bg-secondary/15 text-secondary border border-secondary/40 shadow-[0_0_18px_hsl(262_60%_65%/0.2)]"
+                          }`}>{initial}</div>
+                        <div>
+                          <div className="text-2xl md:text-3xl font-bold text-foreground">{c.title}</div>
+                          <div className={`text-sm mt-1 font-mono ${c.color === "primary" ? "text-primary" : "text-secondary"
+                            }`}>{c.detail}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr className="border-t border-border/50 my-4" />
+
+                    <div className="flex items-center gap-4">
+                      <div className={`w-10 h-10 rounded-md flex items-center justify-center ${c.color === "primary"
+                          ? "bg-primary/10 text-primary"
+                          : "bg-secondary/10 text-secondary"
+                        }`}>
+                        <Phone size={18} />
+                      </div>
+                      <a href={c.href} className="text-sm text-foreground font-medium">{formatted}</a>
+                    </div>
                   </div>
-                  <span className="text-sm text-foreground font-semibold">{c.title}</span>
-                  <span className="text-xs text-muted-foreground">{c.detail}</span>
-                  <ArrowRight size={14} className="text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all" />
-                </SpotlightCard>
-              </motion.a>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="glass-card p-10 md:p-14"
-          >
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
-              Ready to build the future of AI?
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Join thousands of developers across India in the largest AI hackathon.
-            </p>
-            <Button variant="hero" size="lg" asChild>
-              <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
-                Register Now <ArrowRight size={16} />
-              </a>
-            </Button>
-          </motion.div>
+          {/* CTA removed per request */}
         </div>
       </div>
     </section>

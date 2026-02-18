@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import JourneySection from "@/components/JourneySection";
+import ProblemStatementSection from "@/components/ProblemStatementSection";
 import GuidelinesSection from "@/components/GuidelinesSection";
 import CommitteeSection from "@/components/CommitteeSection";
 import ContactSection from "@/components/ContactSection";
@@ -16,6 +17,7 @@ const Index = () => {
       <main className="relative z-10">
         <HeroSection />
         <AboutSection />
+        <ProblemStatementSection />
         <JourneySection />
         <GuidelinesSection />
         <CommitteeSection />

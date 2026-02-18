@@ -8,7 +8,7 @@ const GuidelinesSection = () => {
     {
       title: "1. Team Formation",
       content: (
-        <p>Students must form a team consisting of a minimum of 2 and a maximum of 3 members.</p>
+        <p>Students must form a team consisting of a minimum of 1 and a maximum of 4 members.</p>
       ),
     },
     {
@@ -40,7 +40,7 @@ const GuidelinesSection = () => {
       title: "5. Registration Fee",
       content: (
         <div>
-          <p>Shortlisted teams must register for the Grand Finale by paying a registration fee of ₹1000 per team.</p>
+          <p>Shortlisted teams must register for the Grand Finale by paying a registration fee of ₹250 each.</p>
           <p className="mt-2 text-xs text-muted-foreground">(The mode of payment is available on the event website, and shortlisted teams will be notified with further details through email by the organizers.)</p>
         </div>
       ),

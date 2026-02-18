@@ -3,16 +3,15 @@ import { Award, Trophy, BookCheck, Star, Network } from "lucide-react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 import AnimatedCounter from "@/components/effects/AnimatedCounter";
 import ParallaxSection from "@/components/effects/ParallaxSection";
+// import GlobeDemo from "@/components/ui/globe-demo";
 
 
 
 // participants section removed per request
 
 const benefits = [
-  { icon: Trophy, title: "Prize Pool", desc: "INR 40,00,000 for top teams across Student and Professional tracks.", value: 4000000, prefix: "₹", suffix: "+" },
-  { icon: Award, title: "Certificate", desc: "Earn your AI for Bharat Certificate by completing workshop and blog." },
-  { icon: BookCheck, title: "Expert Access", desc: "Hands-on workshops led by AWS experts." },
-  { icon: Star, title: "National Recognition", desc: "Present solutions at the Grand Finale to industry leaders." },
+  { icon: Trophy, title: "Prize Pool", desc: "INR 50,000 for top teams across Student tracks.", value: 50000, prefix: "₹", suffix: "+" },
+  { icon: Award, title: "Certificate", desc: "Merit certificates will be awarded to all winning teams and All cipants will receive a Participation Certificate." },
   { icon: Network, title: "Networking", desc: "Connect with developers across India and collaborate." },
 ];
 
@@ -35,21 +34,32 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl mb-20"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border mb-6 text-xs font-mono text-muted-foreground">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-              OVERVIEW
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border mb-6 text-xs font-mono text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                OVERVIEW
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                Tired of just reading about AI? <span className="text-gradient-green">It's time to start building.</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                TECH ZEAL 2026 (PHYSICAL MODE) is 10 Hours State Level Hackathon contest organized by Department of Information Technology, Sona College of Technology, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy. TECH ZEAL 2026 provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to technically enriched students to come up with innovative solution. More information related to problem statements of the contest can be seen in problem statements tab.
+              </p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-              Tired of just reading about AI?{" "}
-              <span className="text-gradient-green">It's time to start building.</span>
-            </h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              TECH ZEAL 2026 (PHYSICAL MODE) is 10 Hours State Level Hackathon contest organized by Department of Information Technology, Sona College of Technology, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy.
-TECH ZEAL 2026 provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to technically enriched students to come up with innovative solution. More information related to problem statements of the contest can be seen in problem statements tab.
 
-            </p>
+            <div className="w-full h-[36rem] md:h-[40rem] flex items-center justify-center">
+              <div className="glass-card p-8 rounded-2xl flex flex-col items-center justify-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                  <Network size={32} />
+                </div>
+                <h3 className="text-xl font-semibold text-gradient-green">Global Collaboration</h3>
+                <p className="text-muted-foreground text-center max-w-xs">
+                  Connect with innovators worldwide and build solutions that matter
+                </p>
+              </div>
+            </div>
           </motion.div>
         </ParallaxSection>
 
