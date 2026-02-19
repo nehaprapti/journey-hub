@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -22,6 +23,17 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setMobileOpen(false);
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -40,12 +52,14 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.label}
             </a>
           ))}
-          <Button variant="hero" size="sm" asChild>
+          <AnimatedThemeToggler />
+          <Button variant="hero" size="sm" asChild className="cursor-none" data-heart-cursor="true">
             <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>
@@ -69,13 +83,13 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="block py-3 text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.label}
             </a>
           ))}
-          <Button variant="hero" size="sm" className="w-full mt-2" asChild>
+          <Button variant="hero" size="sm" className="w-full mt-2 cursor-none" data-heart-cursor="true" asChild>
             <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>

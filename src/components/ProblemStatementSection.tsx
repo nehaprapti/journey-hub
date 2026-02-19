@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Cpu, Globe, Leaf, HeartPulse, GraduationCap } from "lucide-react";
 import ParallaxSection from "@/components/effects/ParallaxSection";
-import PixelTransition from "@/components/effects/PixelTransition";
+import { gsap } from "gsap";
 
 const problems = [
     {
@@ -65,6 +66,164 @@ const fadeUp = {
     }),
 };
 
+/* ── Individual expandable card ── */
+function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
+    const [expanded, setExpanded] = useState(false);
+    const isPrimary = p.color === "primary";
+    const Icon = p.icon;
+
+    /* pixel overlay refs */
+    const pixelGridRef = useRef<HTMLDivElement>(null);
+    const delayedCallRef = useRef<gsap.core.Tween | null>(null);
+
+    const GRID = 12;
+    const STEP = 0.28;
+
+    /* build pixel grid once on mount */
+    const initPixels = (el: HTMLDivElement | null) => {
+        if (!el || el.childElementCount > 0) return;
+        for (let r = 0; r < GRID; r++) {
+            for (let c = 0; c < GRID; c++) {
+                const px = document.createElement("div");
+                px.style.cssText = `
+                    position:absolute;
+                    display:none;
+                    width:${100 / GRID}%;
+                    height:${100 / GRID}%;
+                    left:${(c * 100) / GRID}%;
+                    top:${(r * 100) / GRID}%;
+                    background:${isPrimary ? "hsl(142,60%,55%)" : "hsl(262,60%,65%)"};
+                `;
+                el.appendChild(px);
+            }
+        }
+    };
+
+    const runPixels = () => {
+        const el = pixelGridRef.current;
+        if (!el) return;
+        const pixels = el.querySelectorAll<HTMLDivElement>("div");
+        if (!pixels.length) return;
+
+        gsap.killTweensOf(pixels);
+        delayedCallRef.current?.kill();
+        gsap.set(pixels, { display: "none" });
+
+        const stagger = STEP / pixels.length;
+        gsap.to(pixels, { display: "block", duration: 0, stagger: { each: stagger, from: "random" } });
+        delayedCallRef.current = gsap.delayedCall(STEP, () => { });
+        gsap.to(pixels, { display: "none", duration: 0, delay: STEP, stagger: { each: stagger, from: "random" } });
+    };
+
+    const toggle = (next: boolean) => {
+        if (next === expanded) return;
+        runPixels();
+        setExpanded(next);
+    };
+
+    const accentGlow = isPrimary
+        ? "shadow-[0_0_24px_hsl(142_60%_55%/0.25)]"
+        : "shadow-[0_0_24px_hsl(262_60%_65%/0.25)]";
+    const accentBg = isPrimary ? "bg-primary/15 text-primary" : "bg-secondary/15 text-secondary";
+    const badgeCls = isPrimary
+        ? "border-primary/40 bg-primary/10 text-primary"
+        : "border-secondary/40 bg-secondary/10 text-secondary";
+    const dividerCls = isPrimary
+        ? "bg-gradient-to-r from-primary/50 via-primary/20 to-transparent"
+        : "bg-gradient-to-r from-secondary/50 via-secondary/20 to-transparent";
+    const cardBg = isPrimary
+        ? "linear-gradient(135deg, hsl(220 20% 10%), hsl(220 20% 8%))"
+        : "linear-gradient(135deg, hsl(220 20% 10%), hsl(220 20% 8%))";
+    const expandedBg = isPrimary
+        ? "linear-gradient(135deg, hsl(142 40% 8%), hsl(220 20% 7%))"
+        : "linear-gradient(135deg, hsl(262 40% 10%), hsl(220 20% 7%))";
+
+    return (
+        <motion.div
+            custom={i}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={fadeUp}
+        >
+            <motion.div
+                className={`relative w-full overflow-hidden rounded-xl border transition-colors cursor-pointer select-none ${expanded ? "border-primary/30" : "border-border/50"
+                    }`}
+                style={{ background: expanded ? expandedBg : cardBg }}
+                onClick={() => toggle(!expanded)}
+                layout
+                transition={{ layout: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } }}
+            >
+                {/* ── Collapsed / front row ── */}
+                <div className="flex flex-col px-8 py-6 gap-3">
+                    {/* Badge row */}
+                    <span className={`self-start text-xs font-mono font-bold px-3 py-0.5 rounded-full border whitespace-nowrap ${badgeCls}`}>
+                        {p.id} · {p.domain}
+                    </span>
+
+                    {/* Icon + Title + hint on same line */}
+                    <div className="flex flex-row items-center gap-4">
+                        <div className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center ${accentBg} ${accentGlow}`}>
+                            <Icon size={22} />
+                        </div>
+                        <h3 className="text-sm md:text-base font-bold text-white leading-snug flex-1 min-w-0">{p.title}</h3>
+                        <motion.span
+                            className="text-xs text-white/30 font-mono shrink-0 hidden sm:block"
+                            animate={{ opacity: expanded ? 0 : 1 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            click to reveal →
+                        </motion.span>
+                    </div>
+                </div>
+
+                {/* ── Expanded / back content ── */}
+                <AnimatePresence>
+                    {expanded && (
+                        <motion.div
+                            key="expanded"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                            className="overflow-hidden"
+                        >
+                            <div className="px-8 pt-2 pb-8">
+                                {/* Divider */}
+                                <div className={`h-px mb-4 ${dividerCls}`} />
+
+                                {/* Description */}
+                                <p className="text-base text-white/75 leading-relaxed mb-4">
+                                    {p.description}
+                                </p>
+
+                                {/* Tags */}
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    {p.tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="text-xs font-mono px-3 py-1 rounded-full border border-white/15 text-white/55 bg-white/5"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Pixel overlay */}
+                <div
+                    ref={(el) => { pixelGridRef.current = el; initPixels(el); }}
+                    className="absolute inset-0 w-full h-full pointer-events-none z-10"
+                />
+            </motion.div>
+        </motion.div>
+    );
+}
+
+/* ── Section ── */
 const ProblemStatementSection = () => {
     return (
         <section id="problems" className="section-padding relative overflow-hidden">
@@ -90,136 +249,16 @@ const ProblemStatementSection = () => {
                         </h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
                             Five real-world problem domains. One hackathon. Infinite possibilities.{" "}
-                            <span className="text-primary font-medium">Hover</span> a card to reveal the full statement.
+                            <span className="text-primary font-medium">Click</span> a card to reveal the full statement.
                         </p>
                     </motion.div>
                 </ParallaxSection>
 
-                {/* Pixel Transition Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    {problems.map((p, i) => {
-                        const Icon = p.icon;
-                        const isPrimary = p.color === "primary";
-
-                        /* ── FRONT FACE ── */
-                        const frontFace = (
-                            <div
-                                className="w-full h-full flex flex-col items-center justify-center gap-5 p-8 text-center"
-                                style={{
-                                    background: isPrimary
-                                        ? "linear-gradient(135deg, hsl(220 20% 10%), hsl(220 20% 8%))"
-                                        : "linear-gradient(135deg, hsl(220 20% 10%), hsl(220 20% 8%))",
-                                }}
-                            >
-                                {/* Domain icon */}
-                                <div
-                                    className={`w-16 h-16 rounded-2xl flex items-center justify-center ${isPrimary
-                                            ? "bg-primary/15 text-primary shadow-[0_0_24px_hsl(142_60%_55%/0.25)]"
-                                            : "bg-secondary/15 text-secondary shadow-[0_0_24px_hsl(262_60%_65%/0.25)]"
-                                        }`}
-                                >
-                                    <Icon size={32} />
-                                </div>
-
-                                {/* PS badge */}
-                                <span
-                                    className={`text-xs font-mono font-bold px-3 py-1 rounded-full border ${isPrimary
-                                            ? "border-primary/40 bg-primary/10 text-primary"
-                                            : "border-secondary/40 bg-secondary/10 text-secondary"
-                                        }`}
-                                >
-                                    {p.id} · {p.domain}
-                                </span>
-
-                                {/* Title */}
-                                <h3 className="text-base md:text-lg font-bold text-white leading-snug">
-                                    {p.title}
-                                </h3>
-
-                                {/* Hover hint */}
-                                <p className="text-xs text-white/30 font-mono mt-1">hover to reveal →</p>
-                            </div>
-                        );
-
-                        /* ── BACK FACE (revealed on hover) ── */
-                        const backFace = (
-                            <div
-                                className="w-full h-full flex flex-col justify-between p-7"
-                                style={{
-                                    background: isPrimary
-                                        ? "linear-gradient(135deg, hsl(142 40% 8%), hsl(220 20% 7%))"
-                                        : "linear-gradient(135deg, hsl(262 40% 10%), hsl(220 20% 7%))",
-                                }}
-                            >
-                                {/* Top: id + domain */}
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span
-                                        className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded-full border ${isPrimary
-                                                ? "border-primary/50 bg-primary/15 text-primary"
-                                                : "border-secondary/50 bg-secondary/15 text-secondary"
-                                            }`}
-                                    >
-                                        {p.id}
-                                    </span>
-                                    <span className="text-xs text-white/50 font-mono">{p.domain}</span>
-                                </div>
-
-                                {/* Title */}
-                                <h3 className="text-sm font-bold text-white leading-snug mb-3">
-                                    {p.title}
-                                </h3>
-
-                                {/* Divider */}
-                                <div
-                                    className={`h-px mb-3 ${isPrimary
-                                            ? "bg-gradient-to-r from-primary/50 via-primary/20 to-transparent"
-                                            : "bg-gradient-to-r from-secondary/50 via-secondary/20 to-transparent"
-                                        }`}
-                                />
-
-                                {/* Description */}
-                                <p className="text-xs text-white/70 leading-relaxed flex-1 overflow-auto">
-                                    {p.description}
-                                </p>
-
-                                {/* Tags */}
-                                <div className="flex flex-wrap gap-1.5 mt-4">
-                                    {p.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-white/15 text-white/50 bg-white/5"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-
-                        return (
-                            <motion.div
-                                key={p.id}
-                                custom={i}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, margin: "-40px" }}
-                                variants={fadeUp}
-                                className="flex justify-center"
-                            >
-                                <PixelTransition
-                                    firstContent={frontFace}
-                                    secondContent={backFace}
-                                    gridSize={10}
-                                    pixelColor={isPrimary ? "hsl(142, 60%, 55%)" : "hsl(262, 60%, 65%)"}
-                                    animationStepDuration={0.35}
-                                    once={false}
-                                    aspectRatio="100%"
-                                    className="w-full !rounded-xl !border !border-border/50 !bg-transparent hover:!border-primary/30 transition-colors"
-                                    style={{ width: "100%", maxWidth: "100%" }}
-                                />
-                            </motion.div>
-                        );
-                    })}
+                {/* Cards */}
+                <div className="flex flex-col gap-4 w-full">
+                    {problems.map((p, i) => (
+                        <ProblemCard key={p.id} p={p} i={i} />
+                    ))}
                 </div>
 
                 {/* Bottom note */}

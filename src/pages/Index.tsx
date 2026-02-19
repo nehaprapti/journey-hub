@@ -7,25 +7,23 @@ import GuidelinesSection from "@/components/GuidelinesSection";
 import CommitteeSection from "@/components/CommitteeSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import ParticleField from "@/components/effects/ParticleField";
+import HeartCursor from "@/components/effects/HeartCursor";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background relative">
-      <ParticleField />
-      <Navbar />
-      <main className="relative z-10">
-        <HeroSection />
-        <AboutSection />
-        <ProblemStatementSection />
-        <JourneySection />
-        <GuidelinesSection />
-        <CommitteeSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="min-h-screen bg-background text-foreground">
+            <HeartCursor />
+            <Navbar />
+            <HeroSection />
+            <AboutSection />
+            <JourneySection />
+            <ProblemStatementSection />
+            <GuidelinesSection />
+            <CommitteeSection />
+            <ContactSection />
+            <Footer />
+        </div>
+    );
 };
 
 export default Index;

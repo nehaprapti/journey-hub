@@ -6,22 +6,22 @@
 
 @layer base {
   :root {
-    --background: 220 20% 7%;
+    --background: 0 0% 2%;
     --foreground: 210 20% 92%;
 
-    --card: 220 18% 10%;
+    --card: 0 0% 4%;
     --card-foreground: 210 20% 92%;
 
-    --popover: 220 18% 10%;
+    --popover: 0 0% 4%;
     --popover-foreground: 210 20% 92%;
 
     --primary: 142 60% 55%;
-    --primary-foreground: 220 20% 7%;
+    --primary-foreground: 0 0% 2%;
 
     --secondary: 262 60% 65%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 15% 15%;
+    --muted: 0 0% 8%;
     --muted-foreground: 215 15% 55%;
 
     --accent: 262 60% 65%;
@@ -30,26 +30,74 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
     --ring: 142 60% 55%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 20% 7%;
+    --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 210 20% 92%;
     --sidebar-primary: 142 60% 55%;
-    --sidebar-primary-foreground: 220 20% 7%;
-    --sidebar-accent: 220 15% 15%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 8%;
     --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 220 15% 18%;
+    --sidebar-border: 0 0% 12%;
     --sidebar-ring: 142 60% 55%;
 
     --gradient-green: linear-gradient(135deg, hsl(142 60% 55%), hsl(160 60% 45%));
     --gradient-purple: linear-gradient(135deg, hsl(262 60% 65%), hsl(280 60% 55%));
-    --gradient-dark: linear-gradient(180deg, hsl(220 20% 7%), hsl(220 25% 4%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 2%), hsl(0 0% 1%));
     --glow-green: 0 0 40px hsl(142 60% 55% / 0.3);
     --glow-purple: 0 0 40px hsl(262 60% 65% / 0.3);
+  }
+
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 220 20% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 142 55% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 262 55% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 262 55% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 142 55% 40%;
+
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 220 20% 10%;
+    --sidebar-primary: 142 55% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 142 55% 40%;
+
+    --gradient-green: linear-gradient(135deg, hsl(142 55% 40%), hsl(160 55% 32%));
+    --gradient-purple: linear-gradient(135deg, hsl(262 55% 55%), hsl(280 55% 45%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 98%), hsl(0 0% 94%));
+    --glow-green: 0 0 40px hsl(142 55% 40% / 0.2);
+    --glow-purple: 0 0 40px hsl(262 55% 55% / 0.2);
+  }
+  .theme {
+    --animate-line-shadow: line-shadow 15s linear infinite;
   }
 }
 
@@ -58,11 +106,18 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: 'Space Grotesk', sans-serif;
   }
 }
@@ -101,5 +156,35 @@
   .section-padding {
     /* reduced vertical padding to tighten gaps between sections */
     @apply py-12 md:py-16 px-4 md:px-8;
+  }
+
+  .cursor-heart {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 28s-14-8.5-14-17A8 8 0 0 1 16 7.22 8 8 0 0 1 30 11c0 8.5-14 17-14 17z' fill='%2322c55e' stroke='%2316a34a' stroke-width='1.5'/%3E%3C/svg%3E") 16 28, pointer;
+  }
+}
+
+/* ── View Transition: circular reveal from toggle button ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+@theme inline {
+  @keyframes line-shadow {
+  0% {
+    background-position: 0 0;
+    }
+  100% {
+    background-position: 100% -100%;
+    }
   }
 }

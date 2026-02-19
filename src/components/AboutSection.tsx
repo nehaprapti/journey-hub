@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Award, Trophy, BookCheck, Star, Network } from "lucide-react";
+import { Award, Trophy, Network } from "lucide-react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 import AnimatedCounter from "@/components/effects/AnimatedCounter";
 import ParallaxSection from "@/components/effects/ParallaxSection";
-// import GlobeDemo from "@/components/ui/globe-demo";
+import { GlobeDemo } from "@/components/ui/globe-demo";
 
 
 
@@ -49,16 +49,8 @@ const AboutSection = () => {
               </p>
             </div>
 
-            <div className="w-full h-[36rem] md:h-[40rem] flex items-center justify-center">
-              <div className="glass-card p-8 rounded-2xl flex flex-col items-center justify-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                  <Network size={32} />
-                </div>
-                <h3 className="text-xl font-semibold text-gradient-green">Global Collaboration</h3>
-                <p className="text-muted-foreground text-center max-w-xs">
-                  Connect with innovators worldwide and build solutions that matter
-                </p>
-              </div>
+            <div className="w-full h-[36rem] md:h-[40rem] relative">
+              <GlobeDemo />
             </div>
           </motion.div>
         </ParallaxSection>

@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Users, MapPin, Wifi, Trophy, ChevronDown, NotebookPenIcon } from "lucide-react";
 import TypewriterText from "@/components/effects/TypewriterText";
-import AnimatedGrid from "@/components/effects/AnimatedGrid";
-import Prism from "@/components/Prism";
+import Orb from "@/components/effects/Orb";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { LineShadowText } from "@/components/ui/line-shadow-text";
 
 const stats = [
   { icon: Users, label: "1-4 Members per team" },
@@ -14,23 +16,34 @@ const stats = [
 ];
 
 const HeroSection = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated grid overlay */}
-      <AnimatedGrid />
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-      {/* Prism background (full-bleed) */}
+  const isLight = mounted && resolvedTheme === "light";
+  const orbBg = isLight ? "#fafafa" : "#000000";
+  const sectionBg = isLight ? "bg-[#fafafa]" : "bg-[#020202]";
+  const titleColor = isLight ? "text-gray-900" : "text-white";
+
+  return (
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500 ${sectionBg}`}>
+
+      {/* Orb — full-bleed background */}
       <div className="absolute inset-0 z-0">
-        <Prism scale={3.6} hueShift={0} colorFrequency={1.2} glow={0.8} bloom={1.6} saturation={1} tint="#222226" suspendWhenOffscreen={false} />
+        <Orb
+          hoverIntensity={0.37}
+          rotateOnHover
+          hue={360}
+          forceHoverState={false}
+          backgroundColor={orbBg}
+        />
       </div>
 
-      {/* Radial glows for extra depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/6 blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-secondary/6 blur-[100px] pointer-events-none" />
+      {/* Foreground content — fully centered */}
+      <div className="relative z-10 container mx-auto px-4 pt-20 flex flex-col items-center">
+        <div className="max-w-4xl w-full text-center">
 
-      {/* Foreground content */}
-      <div className="relative z-10 container mx-auto px-4 pt-20">
-        <div className="max-w-5xl mx-auto text-center lg:text-left">
+          {/* Live badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -41,16 +54,24 @@ const HeroSection = () => {
             <span className="text-xs font-mono text-primary">Hackathon Phase is Live</span>
           </motion.div>
 
+          {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight text-white drop-shadow-lg"
+            className={`text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight drop-shadow-lg transition-colors duration-500 ${titleColor}`}
           >
-            <span>TechZeal </span>
-            <span className="text-gradient-green">'26</span>
+            <span>Tech</span>
+            <LineShadowText
+              shadowColor={isLight ? "#16a34a" : "#4ade80"}
+              className="italic"
+            >
+              Zeal
+            </LineShadowText>
+            <span className="text-gradient-green">{" '26"}</span>
           </motion.h1>
 
+          {/* Typewriter subtitle */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -63,13 +84,14 @@ const HeroSection = () => {
             />
           </motion.div>
 
+          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.85 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Button variant="hero" size="lg" asChild>
+            <Button variant="hero" size="lg" asChild className="cursor-none" data-heart-cursor="true">
               <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
                 Register Now
               </a>
@@ -79,11 +101,12 @@ const HeroSection = () => {
             </Button>
           </motion.div>
 
+          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1 }}
-            className="flex flex-wrap justify-center gap-6 md:gap-10"
+            className="flex flex-wrap justify-center gap-3"
           >
             {stats.map((stat, i) => (
               <motion.div
@@ -91,10 +114,10 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.15 + i * 0.06 }}
-                className="flex items-center gap-2 text-primary/90 drop-shadow"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm text-sm font-medium transition-all duration-300 hover:scale-105 hover:border-primary/60 hover:bg-primary/20"
               >
-                <stat.icon size={18} className="text-primary" />
-                <span className="text-sm font-medium">{stat.label}</span>
+                <stat.icon size={15} />
+                <span>{stat.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -105,7 +128,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.9 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="mt-16 mb-4"
         >
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
             <ChevronDown size={24} className="text-primary/90" />
