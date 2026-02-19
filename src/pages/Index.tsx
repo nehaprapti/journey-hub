@@ -11,7 +11,7 @@ import HeartCursor from "@/components/effects/HeartCursor";
 
 const Index = () => {
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="min-h-screen text-foreground relative z-10">
             <HeartCursor />
             <Navbar />
             <HeroSection />

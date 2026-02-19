@@ -4,7 +4,7 @@ import { Users, MapPin, Wifi, Trophy, ChevronDown, NotebookPenIcon } from "lucid
 import TypewriterText from "@/components/effects/TypewriterText";
 import Orb from "@/components/effects/Orb";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
 
 const stats = [
@@ -14,6 +14,15 @@ const stats = [
   { icon: Trophy, label: "INR 50k Prize Pool" },
   { icon: NotebookPenIcon, label: "Registration fee INR 250 each" },
 ];
+
+interface Star {
+  x: number; y: number;
+  baseX: number; baseY: number;
+  size: number; alpha: number; alphaDir: number;
+}
+
+const STAR_COUNT = 180;
+const CURSOR_RADIUS = 110;
 
 const HeroSection = () => {
   const { resolvedTheme } = useTheme();
@@ -25,8 +34,112 @@ const HeroSection = () => {
   const sectionBg = isLight ? "bg-[#fafafa]" : "bg-[#020202]";
   const titleColor = isLight ? "text-gray-900" : "text-white";
 
+  // ── Star canvas refs ──────────────────────────────────────────────
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const starsRef = useRef<Star[]>([]);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
+  const rafRef = useRef<number>(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const initStars = useCallback((w: number, h: number) => {
+    starsRef.current = Array.from({ length: STAR_COUNT }, () => {
+      const x = Math.random() * w;
+      const y = Math.random() * h;
+      return {
+        x, y, baseX: x, baseY: y,
+        size: Math.random() * 1.8 + 0.3,
+        alpha: Math.random() * 0.7 + 0.15,
+        alphaDir: Math.random() < 0.5 ? 1 : -1,
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const section = sectionRef.current;
+    if (!canvas || !section) return;
+    const ctx = canvas.getContext("2d")!;
+
+    const resize = () => {
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+      initStars(canvas.width, canvas.height);
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    const onMouseLeave = () => { mouseRef.current = { x: -9999, y: -9999 }; };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const { x: mx, y: my } = mouseRef.current;
+
+      for (const s of starsRef.current) {
+        // twinkle
+        s.alpha += 0.004 * s.alphaDir;
+        if (s.alpha > 0.9 || s.alpha < 0.1) s.alphaDir *= -1;
+
+        // cursor repulsion
+        const dx = s.x - mx, dy = s.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CURSOR_RADIUS && dist > 0) {
+          const f = ((CURSOR_RADIUS - dist) / CURSOR_RADIUS) * 7;
+          s.x += (dx / dist) * f;
+          s.y += (dy / dist) * f;
+        }
+        // drift back
+        s.x += (s.baseX - s.x) * 0.045;
+        s.y += (s.baseY - s.y) * 0.045;
+
+        ctx.save();
+        ctx.globalAlpha = s.alpha;
+
+        if (s.size > 1.6) {
+          // sparkle cross
+          const arm = s.size * 2.8;
+          ctx.strokeStyle = "#4ade80";
+          ctx.lineWidth = s.size * 0.45;
+          ctx.beginPath();
+          ctx.moveTo(s.x - arm, s.y); ctx.lineTo(s.x + arm, s.y);
+          ctx.moveTo(s.x, s.y - arm); ctx.lineTo(s.x, s.y + arm);
+          ctx.stroke();
+          ctx.fillStyle = "#bbf7d0";
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size * 0.55, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // soft glow dot
+          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 2.2);
+          g.addColorStop(0, "#86efac");
+          g.addColorStop(1, "transparent");
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size * 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      rafRef.current = requestAnimationFrame(draw);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    section.addEventListener("mousemove", onMouseMove);
+    section.addEventListener("mouseleave", onMouseLeave);
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      section.removeEventListener("mousemove", onMouseMove);
+      section.removeEventListener("mouseleave", onMouseLeave);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [initStars]);
+
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500 ${sectionBg}`}>
+    <section ref={sectionRef} className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500 ${sectionBg}`}>
 
       {/* Orb — full-bleed background */}
       <div className="absolute inset-0 z-0">
@@ -39,7 +152,12 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Foreground content — fully centered */}
+      {/* Deep dark overlay so stars pop */}
+      <div className="absolute inset-0 z-[1] bg-black/60" />
+
+      {/* Star canvas confined to this section */}
+      <canvas ref={canvasRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-none" />
+
       <div className="relative z-10 container mx-auto px-4 pt-20 flex flex-col items-center">
         <div className="max-w-4xl w-full text-center">
 

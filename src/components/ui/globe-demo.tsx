@@ -2,18 +2,18 @@ import { World } from "@/components/ui/globe";
 
 const globeConfig = {
     pointSize: 4,
-    globeColor: "#062056",
+    globeColor: "#052e16",
     showAtmosphere: true,
-    atmosphereColor: "#FFFFFF",
+    atmosphereColor: "#4ade80",
     atmosphereAltitude: 0.1,
-    emissive: "#062056",
-    emissiveIntensity: 0.1,
+    emissive: "#052e16",
+    emissiveIntensity: 0.15,
     shininess: 0.9,
-    polygonColor: "rgba(255,255,255,0.7)",
-    ambientLight: "#38bdf8",
+    polygonColor: "rgba(74,222,128,0.4)",
+    ambientLight: "#4ade80",
     directionalLeftLight: "#ffffff",
     directionalTopLight: "#ffffff",
-    pointLight: "#ffffff",
+    pointLight: "#86efac",
     arcTime: 1000,
     arcLength: 0.9,
     rings: 1,
@@ -23,7 +23,7 @@ const globeConfig = {
     autoRotateSpeed: 0.5,
 };
 
-const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
+const colors = ["#22c55e", "#4ade80", "#16a34a"];
 
 const sampleArcs = [
     { order: 1, startLat: -19.885592, startLng: -43.951191, endLat: -22.9068, endLng: -43.1729, arcAlt: 0.1, color: colors[0] },
