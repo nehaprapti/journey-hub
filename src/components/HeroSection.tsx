@@ -186,7 +186,7 @@ const HeroSection = () => {
             >
               Zeal
             </LineShadowText>
-            <span className="text-gradient-green">{" '26"}</span>
+            <LineShadowText shadowColor={isLight ? "#16a34a" : "#4ade80"} className="italic text-primary">{" '26"}</LineShadowText>
           </motion.h1>
 
           {/* Typewriter subtitle */}
