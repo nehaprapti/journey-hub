@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
 import ThreeGlobe from "three-globe";
 import { useThree, Canvas, extend } from "@react-three/fiber";
@@ -167,21 +167,28 @@ export function Globe({ globeConfig, data }: WorldProps) {
 }
 
 export function WebGLRendererConfig() {
-    const { gl, size } = useThree();
+    const { gl } = useThree();
     useEffect(() => {
         gl.setPixelRatio(window.devicePixelRatio);
-        gl.setSize(size.width, size.height);
-        gl.setClearColor(0xffaaff, 0);
-    }, [gl, size]);
+        gl.setClearColor(0x000000, 0);
+    }, [gl]);
     return null;
 }
 
 export function World(props: WorldProps) {
     const { globeConfig } = props;
-    const scene = new Scene();
-    scene.fog = new Fog(0xffffff, 400, 2000);
+    const scene = useMemo(() => {
+        const s = new Scene();
+        s.fog = new Fog(0xffffff, 400, 2000);
+        return s;
+    }, []);
+    const camera = useMemo(() => new PerspectiveCamera(50, aspect, 180, 1800), []);
     return (
-        <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+        <Canvas
+            scene={scene}
+            camera={camera}
+            style={{ width: "100%", height: "100%" }}
+        >
             <WebGLRendererConfig />
             <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
             <directionalLight color={globeConfig.directionalLeftLight} position={new Vector3(-400, 100, 400)} />
