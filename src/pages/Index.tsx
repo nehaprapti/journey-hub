@@ -8,12 +8,14 @@ import CommitteeSection from "@/components/CommitteeSection";
 import InvestorsSection from "@/components/InvestorsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import HeartCursor from "@/components/effects/HeartCursor";
+import ScrollToTop from "@/components/ScrollToTop";
+
 
 const Index = () => {
     return (
         <div className="min-h-screen text-foreground relative z-10">
-            <HeartCursor />
+            <ScrollToTop />
+
             <Navbar />
             <HeroSection />
             <AboutSection />

@@ -53,13 +53,7 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground">
             TechZeal '26 is a program organized by Department of Information Technology with sponsorship support from MongoDB, ICT Academy. All rights reserved.
           </p>
-          <button
-            onClick={scrollToTop}
-            className="w-10 h-10 rounded-full bg-muted/50 hover:bg-primary/10 text-muted-foreground hover:text-primary flex items-center justify-center transition-all"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp size={16} />
-          </button>
+          
         </div>
       </div>
     </footer>

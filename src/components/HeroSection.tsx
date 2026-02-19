@@ -30,9 +30,9 @@ const HeroSection = () => {
   useEffect(() => setMounted(true), []);
 
   const isLight = mounted && resolvedTheme === "light";
-  const orbBg = isLight ? "#fafafa" : "#000000";
-  const sectionBg = isLight ? "bg-[#fafafa]" : "bg-[#020202]";
   const titleColor = isLight ? "text-gray-900" : "text-white";
+  // Dark green in light mode keeps shader bgLuminance ≈ 0 → vivid dark-green orb
+  const orbBg = isLight ? "#001a00" : "#000000";
 
   // ── Star canvas refs ──────────────────────────────────────────────
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -139,10 +139,10 @@ const HeroSection = () => {
   }, [initStars]);
 
   return (
-    <section ref={sectionRef} className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500 ${sectionBg}`}>
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* Orb — full-bleed background */}
-      <div className="absolute inset-0 z-0">
+      {/* Orb — transparent bg so site background shows through */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <Orb
           hoverIntensity={0.37}
           rotateOnHover
@@ -152,10 +152,7 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Deep dark overlay so stars pop */}
-      <div className="absolute inset-0 z-[1] bg-black/60" />
-
-      {/* Star canvas confined to this section */}
+      {/* Star canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-4 pt-20 flex flex-col items-center">
@@ -209,7 +206,7 @@ const HeroSection = () => {
             transition={{ delay: 0.85 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Button variant="hero" size="lg" asChild className="cursor-none" data-heart-cursor="true">
+            <Button variant="hero" size="lg" asChild>
               <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
                 Register Now
               </a>

@@ -83,7 +83,7 @@ const Navbar = () => {
 
           <AnimatedThemeToggler />
 
-          <Button variant="hero" size="sm" asChild className="cursor-none" data-heart-cursor="true">
+          <Button variant="hero" size="sm" asChild>
             <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>
@@ -116,7 +116,7 @@ const Navbar = () => {
               {item.label}
             </a>
           ))}
-          <Button variant="hero" size="sm" className="w-full mt-2 cursor-none" data-heart-cursor="true" asChild>
+          <Button variant="hero" size="sm" className="w-full mt-2" asChild>
             <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>
