@@ -4,9 +4,15 @@ import { motion } from "framer-motion";
 interface SpotlightCardProps {
   children: ReactNode;
   className?: string;
+  /** rgba string for the spotlight glow colour, e.g. "rgba(74,222,128,0.08)" */
+  spotlightColor?: string;
 }
 
-const SpotlightCard = ({ children, className = "" }: SpotlightCardProps) => {
+const SpotlightCard = ({
+  children,
+  className = "",
+  spotlightColor = "rgba(74, 222, 128, 0.06)",
+}: SpotlightCardProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
@@ -30,7 +36,7 @@ const SpotlightCard = ({ children, className = "" }: SpotlightCardProps) => {
         className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(74, 222, 128, 0.06), transparent 60%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
         }}
       />
       {children}

@@ -12,7 +12,11 @@ const GuidelinesSection = () => {
       ),
     },
     {
-      title: "2. Idea Nomination",
+      title: "2. Team Limit",
+      content: <p>Each team is allowed to register for only one Problem Statement.</p>,
+    },
+    {
+      title: "3. Idea Nomination",
       content: (
         <div>
           <p>A maximum of 20 registrations are allowed per Problem Statement. Teams must complete the registration process within the given timeline by filling out the registration form link.</p>
@@ -22,10 +26,6 @@ const GuidelinesSection = () => {
           </ul>
         </div>
       ),
-    },
-    {
-      title: "3. Team Limit",
-      content: <p>Each team is allowed to register for only one Problem Statement.</p>,
     },
     {
       title: "4. Selection and Shortlisting",

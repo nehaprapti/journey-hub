@@ -5,6 +5,7 @@ import JourneySection from "@/components/JourneySection";
 import ProblemStatementSection from "@/components/ProblemStatementSection";
 import GuidelinesSection from "@/components/GuidelinesSection";
 import CommitteeSection from "@/components/CommitteeSection";
+import InvestorsSection from "@/components/InvestorsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import HeartCursor from "@/components/effects/HeartCursor";
@@ -20,6 +21,7 @@ const Index = () => {
             <ProblemStatementSection />
             <GuidelinesSection />
             <CommitteeSection />
+            <InvestorsSection />
             <ContactSection />
             <Footer />
         </div>
