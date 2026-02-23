@@ -35,7 +35,7 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold text-foreground mb-4">Resources</h4>
             <nav className="flex flex-col gap-2">
-              <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Register Now
               </a>
             </nav>

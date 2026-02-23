@@ -5,6 +5,20 @@ import { Mail, MessageSquare, ExternalLink, ArrowRight, Phone } from "lucide-rea
 const contacts = [
   {
     icon: Phone,
+    title: "Raghul N",
+    detail: "IT Chairman",
+    href: "tel:8148961455",
+    color: "primary" as const,
+  },
+  {
+    icon: Phone,
+    title: "Viswath Kumar",
+    detail: "AIDS Chairman",
+    href: "tel:9361428711",
+    color: "secondary" as const,
+  },
+  {
+    icon: Phone,
     title: "Deepak Kumar V",
     detail: "IT Secretary",
     href: "tel:8248159309",

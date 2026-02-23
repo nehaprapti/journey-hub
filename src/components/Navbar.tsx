@@ -84,7 +84,7 @@ const Navbar = () => {
           <AnimatedThemeToggler />
 
           <Button variant="hero" size="sm" asChild>
-            <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
+            <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>
           </Button>
@@ -117,7 +117,7 @@ const Navbar = () => {
             </a>
           ))}
           <Button variant="hero" size="sm" className="w-full mt-2" asChild>
-            <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
+            <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer">
               Register Now
             </a>
           </Button>
