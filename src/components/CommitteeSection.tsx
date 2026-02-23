@@ -84,21 +84,6 @@ const CommitteeSection = () => {
           </p>
         </motion.div>
 
-        {/* Group labels row */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {committee.map((g) => (
-            <span
-              key={g.group}
-              className={`text-xs font-mono px-3 py-1 rounded-full border ${g.color === "primary"
-                  ? "border-primary/40 bg-primary/8 text-primary"
-                  : "border-secondary/40 bg-secondary/8 text-secondary"
-                }`}
-            >
-              {g.badge} · {g.group}
-            </span>
-          ))}
-        </div>
-
         {/* Individual member cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {allMembers.map((member, i) => (
@@ -110,30 +95,20 @@ const CommitteeSection = () => {
               viewport={{ once: true, margin: "-30px" }}
               variants={fadeUp}
             >
-              <SpotlightCard className="p-4 h-full flex flex-col items-center text-center gap-3 hover:border-border/80 transition-all group">
-                {/* Avatar badge */}
-                <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold font-mono flex-shrink-0 transition-transform duration-300 group-hover:scale-110 ${member.color === "primary"
-                      ? "bg-primary/15 text-primary border border-primary/30"
-                      : "bg-secondary/15 text-secondary border border-secondary/30"
-                    }`}
-                >
-                  {member.badge}
-                </div>
-
+              <SpotlightCard className="p-4 h-full flex flex-col justify-center text-center gap-2 hover:border-border/80 transition-all group">
                 {/* Name */}
-                <div className="flex-1">
+                <div>
                   <p className="text-sm font-semibold text-foreground leading-snug">
                     {member.name}
                   </p>
                   {member.role && (
-                    <p className="text-xs text-muted-foreground mt-0.5">{member.role}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{member.role}</p>
                   )}
                 </div>
 
                 {/* Group pill */}
                 <span
-                  className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${member.color === "primary"
+                  className={`text-[10px] font-mono px-2 py-0.5 rounded-full border mx-auto ${member.color === "primary"
                       ? "border-primary/30 text-primary bg-primary/8"
                       : "border-secondary/30 text-secondary bg-secondary/8"
                     }`}

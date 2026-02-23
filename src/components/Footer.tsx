@@ -38,12 +38,6 @@ const Footer = () => {
               <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Register Now
               </a>
-              <a href="https://hack2skill.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Hack2Skill
-              </a>
-              <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                AWS
-              </a>
             </nav>
           </div>
         </div>

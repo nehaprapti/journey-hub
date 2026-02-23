@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Users, MapPin, Wifi, Trophy, ChevronDown, NotebookPenIcon } from "lucide-react";
 import TypewriterText from "@/components/effects/TypewriterText";
@@ -27,6 +27,7 @@ const CURSOR_RADIUS = 110;
 const HeroSection = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [currentStatIndex, setCurrentStatIndex] = useState(0);
   useEffect(() => setMounted(true), []);
 
   const isLight = mounted && resolvedTheme === "light";
@@ -138,8 +139,16 @@ const HeroSection = () => {
     };
   }, [initStars]);
 
+  // Cycle through stats
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStatIndex((prev) => (prev + 1) % stats.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
 
       {/* Orb — transparent bg so site background shows through */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -155,101 +164,112 @@ const HeroSection = () => {
       {/* Star canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-none" />
 
-      <div className="relative z-10 container mx-auto px-4 pt-20 flex flex-col items-center">
-        <div className="max-w-4xl w-full text-center">
+      {/* ── Badge + Title + Subtitle — absolutely centered inside the orb ── */}
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+        {/* Live badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.45 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-5 md:mb-8"
+        >
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
+          <span className="text-xs font-mono text-primary">Hackathon Phase is Live</span>
+        </motion.div>
 
-          {/* Live badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.45 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-8"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-            <span className="text-xs font-mono text-primary">Hackathon Phase is Live</span>
-          </motion.div>
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className={`text-4xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-tight drop-shadow-lg transition-colors duration-500 ${titleColor}`}
+        >
+          <span>Tech</span>
+          <LineShadowText shadowColor={isLight ? "#16a34a" : "#4ade80"} className="italic">Zeal</LineShadowText>
+          <LineShadowText shadowColor={isLight ? "#16a34a" : "#4ade80"} className="italic text-primary">{" '26"}</LineShadowText>
+        </motion.h1>
 
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className={`text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight drop-shadow-lg transition-colors duration-500 ${titleColor}`}
-          >
-            <span>Tech</span>
-            <LineShadowText
-              shadowColor={isLight ? "#16a34a" : "#4ade80"}
-              className="italic"
-            >
-              Zeal
-            </LineShadowText>
-            <LineShadowText shadowColor={isLight ? "#16a34a" : "#4ade80"} className="italic text-primary">{" '26"}</LineShadowText>
-          </motion.h1>
+        {/* Typewriter subtitle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="text-base md:text-xl text-primary/90 h-7 md:h-8 drop-shadow"
+        >
+          <TypewriterText
+            texts={["Learn Faster. Build Better.", "Innovate with AI.", "Transform India's Tech Landscape."]}
+            speed={70}
+          />
+        </motion.div>
+      </div>
 
-          {/* Typewriter subtitle */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-lg md:text-xl text-primary/90 mb-10 h-8 drop-shadow"
-          >
-            <TypewriterText
-              texts={["Learn Faster. Build Better.", "Innovate with AI.", "Transform India's Tech Landscape."]}
-              speed={70}
-            />
-          </motion.div>
+      {/* ── Buttons + Stats + Scroll — normal flow below the orb area ── */}
+      <div className="relative z-10 flex flex-col items-center justify-end min-h-screen px-4 pb-8 pt-8 gap-5">
+        {/* CTA buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85 }}
+          className="flex flex-row gap-3 md:gap-4 justify-center"
+        >
+          <Button variant="hero" size="lg" asChild>
+            <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
+              Register Now
+            </a>
+          </Button>
+          <Button variant="hero-outline" size="lg" asChild>
+            <a href="#about">Learn More</a>
+          </Button>
+        </motion.div>
 
-          {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
-          >
-            <Button variant="hero" size="lg" asChild>
-              <a href="https://vision.hack2skill.com/event/ai-for-bharat" target="_blank" rel="noopener noreferrer">
-                Register Now
-              </a>
-            </Button>
-            <Button variant="hero-outline" size="lg" asChild>
-              <a href="#about">Learn More</a>
-            </Button>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {stats.map((stat, i) => (
+        {/* Morphing Stats Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
+          className="flex justify-center"
+        >
+          <div className="relative flex items-center gap-2 px-6 py-3 rounded-full border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm text-sm font-medium overflow-hidden min-w-[280px] justify-center">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.15 + i * 0.06 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm text-sm font-medium transition-all duration-300 hover:scale-105 hover:border-primary/60 hover:bg-primary/20"
+                key={currentStatIndex}
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex items-center gap-2 absolute inset-0 justify-center"
               >
-                <stat.icon size={15} />
-                <span>{stat.label}</span>
+                {(() => {
+                  const CurrentIcon = stats[currentStatIndex].icon;
+                  return (
+                    <>
+                      <CurrentIcon size={16} />
+                      <span>{stats[currentStatIndex].label}</span>
+                    </>
+                  );
+                })()}
               </motion.div>
-            ))}
-          </motion.div>
-        </div>
+            </AnimatePresence>
+            {/* Invisible placeholder to maintain badge size */}
+            <div className="opacity-0 flex items-center gap-2">
+              <Users size={16} />
+              <span className="whitespace-nowrap">Sona College of Technology, Salem</span>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.9 }}
-          className="mt-16 mb-4"
         >
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
             <ChevronDown size={24} className="text-primary/90" />
           </motion.div>
         </motion.div>
       </div>
+
     </section>
   );
 };

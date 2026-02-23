@@ -34,23 +34,29 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-20"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
           >
-            <div className="max-w-3xl">
+            {/* Badge + Heading — order-1 on mobile (above globe), left col row-1 on md+ */}
+            <div className="order-1 md:order-1">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border mb-6 text-xs font-mono text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 OVERVIEW
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
                 Tired of just reading about AI? <span className="text-gradient-green">It's time to start building.</span>
               </h2>
+            </div>
+
+            {/* Globe — order-2 on mobile (between heading and paragraph), right col spanning both rows on md+ */}
+            <div className="w-full h-[18rem] md:h-[40rem] relative order-2 md:order-2 md:row-span-2">
+              <GlobeDemo />
+            </div>
+
+            {/* Paragraph — order-3 on mobile (below globe), left col row-2 on md+ */}
+            <div className="order-3 md:order-3">
               <p className="text-muted-foreground leading-relaxed text-lg">
                 <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy. <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solution</span>. More information related to problem statements of the contest can be seen in problem statements tab.
               </p>
-            </div>
-
-            <div className="w-full h-[36rem] md:h-[40rem] relative">
-              <GlobeDemo />
             </div>
           </motion.div>
         </ParallaxSection>
