@@ -31,8 +31,8 @@ const GuidelinesSection = () => {
       title: "4. Selection and Shortlisting",
       content: (
         <div>
-          <p>All registered teams are required to submit their proposed solution in PPT format with a maximum limit of 10 slides for evaluation and shortlisting.</p>
-          <p className="mt-2">After evaluation, the top 5 teams per Problem Statement will be shortlisted for the Grand Finale.</p>
+          <p>All registered teams are required to submit their proposed solution in PPT format with a maximum limit of 10 slides through the provided Google Forms link.</p>
+          <p className="mt-2">After our evaluation, the top 5 teams per Problem Statement will be shortlisted and announced for the Grand Finale.</p>
         </div>
       ),
     },
@@ -40,8 +40,8 @@ const GuidelinesSection = () => {
       title: "5. Registration Fee",
       content: (
         <div>
-          <p>Shortlisted teams must register for the Grand Finale by paying a registration fee of ₹250 each.</p>
-          <p className="mt-2 text-xs text-muted-foreground">(The mode of payment is available on the event website, and shortlisted teams will be notified with further details through email by the organizers.)</p>
+          <p>Only shortlisted teams can proceed with payment. After the shortlisted teams are announced, participants must pay a registration fee of ₹250 each to confirm their participation in the Grand Finale.</p>
+          <p className="mt-2 text-xs text-muted-foreground">(Payment details and instructions will be shared with shortlisted teams through email by the organizers.)</p>
         </div>
       ),
     },

@@ -3,6 +3,12 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // Alternating green / purple per link
 const navItems = [
@@ -12,7 +18,8 @@ const navItems = [
   { label: "Journey", href: "#journey", color: "purple" },
   { label: "Guidelines", href: "#guidelines", color: "green" },
   { label: "Committee", href: "#committee", color: "purple" },
-  { label: "Contact", href: "#contact", color: "green" },
+  { label: "Brochure", href: "#brochure", color: "green" },
+  { label: "Contact", href: "#contact", color: "purple" },
 ];
 
 const underlineGradient: Record<string, string> = {
@@ -29,6 +36,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [brochureOpen, setBrochureOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -37,7 +45,11 @@ const Navbar = () => {
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith("#")) {
+    if (href === "#brochure") {
+      e.preventDefault();
+      setBrochureOpen(true);
+      setMobileOpen(false);
+    } else if (href.startsWith("#")) {
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -123,6 +135,22 @@ const Navbar = () => {
           </Button>
         </motion.div>
       )}
+
+      {/* Brochure Dialog */}
+      <Dialog open={brochureOpen} onOpenChange={setBrochureOpen}>
+        <DialogContent className="max-w-6xl p-6">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gradient-green">Tech Zeal '26 Brochure</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 flex justify-center items-center">
+            <img 
+              src="/tzb.jpeg" 
+              alt="Tech Zeal 2026 Brochure" 
+              className="w-full max-h-[75vh] object-contain rounded-lg"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </motion.nav>
   );
 };

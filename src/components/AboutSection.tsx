@@ -1,9 +1,16 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Award, Trophy, Network } from "lucide-react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 import AnimatedCounter from "@/components/effects/AnimatedCounter";
 import ParallaxSection from "@/components/effects/ParallaxSection";
 import { GlobeDemo } from "@/components/ui/globe-demo";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 
 
@@ -24,6 +31,8 @@ const fadeUp = {
 };
 
 const AboutSection = () => {
+  const [brochureOpen, setBrochureOpen] = useState(false);
+
   return (
     <section id="about" className="section-padding relative">
       <div className="container mx-auto">
@@ -55,7 +64,13 @@ const AboutSection = () => {
             {/* Paragraph — order-3 on mobile (below globe), left col row-2 on md+ */}
             <div className="order-3 md:order-3">
               <p className="text-muted-foreground leading-relaxed text-lg">
-                <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy. <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solution</span>. More information related to problem statements of the contest can be seen in problem statements tab.
+                <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy. <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solution</span>. More information related to problem statements of the contest can be seen in problem statements tab.{" "}
+                <button 
+                  onClick={() => setBrochureOpen(true)}
+                  className="text-gradient-purple font-semibold hover:text-primary transition-colors underline decoration-purple-400/50 hover:decoration-purple-400 cursor-pointer bg-transparent border-0 p-0"
+                >
+                  View our brochure
+                </button>.
               </p>
             </div>
           </motion.div>
@@ -109,6 +124,22 @@ const AboutSection = () => {
 
         {/* Eligibility / participant cards removed */}
       </div>
+
+      {/* Brochure Dialog */}
+      <Dialog open={brochureOpen} onOpenChange={setBrochureOpen}>
+        <DialogContent className="max-w-6xl p-6">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gradient-green">Tech Zeal '26 Brochure</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 flex justify-center items-center">
+            <img 
+              src="/tzb.jpeg" 
+              alt="Tech Zeal 2026 Brochure" 
+              className="w-full max-h-[75vh] object-contain rounded-lg"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
