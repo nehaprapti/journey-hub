@@ -22,6 +22,12 @@ interface Star {
   size: number; alpha: number; alphaDir: number;
 }
 
+const collaborators = [
+  { src: "/m.png",    alt: "Maadhyamik Technologies" },
+  { src: "/mongo.png", alt: "MongoDB" },
+  { src: "/ict.png",  alt: "ICT Academy" },
+];
+
 const STAR_COUNT = 180;
 const CURSOR_RADIUS = 110;
 
@@ -29,6 +35,7 @@ const HeroSection = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [currentStatIndex, setCurrentStatIndex] = useState(0);
+  const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
   useEffect(() => setMounted(true), []);
 
   const isLight = mounted && resolvedTheme === "light";
@@ -148,20 +155,44 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Cycle through collaborator logos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentLogoIndex((prev) => (prev + 1) % collaborators.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
-      {/* Collaborators logos — positioned just below the navbar */}
-      <div className="absolute top-20 md:top-36 left-1/2 z-20 transform -translate-x-1/2 flex items-center justify-evenly px-6 w-full max-w-xs sm:max-w-lg md:max-w-2xl pointer-events-auto">
-        <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/m.png" alt="Maadhyamik" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
+      {/* Collaborators — single morphing logo card */}
+      <div className="absolute top-20 md:top-32 left-1/2 z-20 transform -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-auto">
+        <p className="text-[10px] font-mono text-primary/60 uppercase tracking-widest">In collaboration with</p>
+        <div className="relative flex items-center justify-center w-[130px] h-[76px] sm:w-44 sm:h-24 md:w-52 md:h-28 rounded-2xl border border-green-400/40 bg-white/90 shadow-[0_0_0_1px_rgba(74,222,128,0.3),0_4px_28px_rgba(74,222,128,0.3)] overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentLogoIndex}
+              src={collaborators[currentLogoIndex].src}
+              alt={collaborators[currentLogoIndex].alt}
+              initial={{ opacity: 0, scale: 0.88, filter: "blur(6px)" }}
+              animate={{ opacity: 1, scale: 1,    filter: "blur(0px)" }}
+              exit={{    opacity: 0, scale: 1.08, filter: "blur(6px)" }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="absolute max-w-[85%] max-h-[80%] object-contain"
+            />
+          </AnimatePresence>
         </div>
-        <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/mongo.png" alt="Mongo" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
-        </div>
-        <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/ict.png" alt="TZB" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
-        </div>
-        
+        {/* Dot indicators 
+        <div className="flex gap-1.5 mt-0.5">
+          {collaborators.map((_, i) => (
+            <span
+              key={i}
+              className={`block w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                i === currentLogoIndex ? "bg-primary scale-125" : "bg-primary/30"
+              }`}
+            />
+          ))}
+        </div>*/}
       </div>
       {/* Orb — transparent bg so site background shows through */}
       <div className="absolute inset-0 z-0 pointer-events-none">
