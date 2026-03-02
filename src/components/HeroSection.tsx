@@ -149,7 +149,18 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
-
+      {/* Collaborators logos — positioned just below the navbar */}
+      <div className="absolute top-36 left-1/2 z-20 transform -translate-x-1/2 flex items-center gap-6 px-4 pointer-events-auto">
+        <a href="#" className="block w-40 h-16 md:w-56 md:h-24">
+          <img src="/Maadhyamik.jpg" alt="Maadhyamik" className="w-full h-full object-contain" />
+        </a>
+        <a href="#" className="block w-32 h-16 md:w-40 md:h-24">
+          <img src="/mongo.png" alt="Mongo" className="w-full h-full object-contain" />
+        </a>
+        <a href="#" className="block w-44 h-36 md:w-40 md:h-32">
+          <img src="/ict.png" alt="TZB" className="w-full h-full object-contain" />
+        </a>
+      </div>
       {/* Orb — transparent bg so site background shows through */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Orb
