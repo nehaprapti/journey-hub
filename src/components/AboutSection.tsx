@@ -64,7 +64,15 @@ const AboutSection = () => {
             {/* Paragraph — order-3 on mobile (below globe), left col row-2 on md+ */}
             <div className="order-3 md:order-3">
               <p className="text-muted-foreground leading-relaxed text-lg">
-                <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry MongoDB, ICT Academy. <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. This is project development contest, where different problems identify by industry or taken from society are posed to <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solution</span>. More information related to problem statements of the contest can be seen in problem statements tab.{" "}
+                <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is a <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by the <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry partners{" "}
+                <span className="text-gradient-green font-semibold">MongoDB</span>,{" "}
+                <span className="text-gradient-green font-semibold">ICT Academy</span>, and{" "}
+                <span className="text-gradient-green font-semibold">Maadhyamik Technologies</span>.{" "}
+                <br></br>
+                <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. 
+                <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solutions</span>. {" "}
+                                <br></br>
+
                 <button 
                   onClick={() => setBrochureOpen(true)}
                   className="text-gradient-purple font-semibold hover:text-primary transition-colors underline decoration-purple-400/50 hover:decoration-purple-400 cursor-pointer bg-transparent border-0 p-0"
