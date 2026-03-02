@@ -8,6 +8,7 @@ interface Investor {
 }
 
 const investors: Investor[] = [
+    { name: "Maadhyamik Technologies", logoImg: "/m.png", role: "Partner" },
     { name: "MongoDB", logoImg: "/mongo.png", role: "Partner" },
     { name: "ICT Academy", logoImg: "/ict.png", role: "Partner" },
 ];

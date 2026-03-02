@@ -12,7 +12,7 @@ const stats = [
   { icon: Users, label: "1-4 Members per team" },
   { icon: MapPin, label: "Sona College of Technology, Salem" },
   { icon: Wifi, label: "Offline" },
-  { icon: Trophy, label: "INR 50k Prize Pool" },
+  { icon: Trophy, label: "INR 30k Prize Pool" },
   { icon: NotebookPenIcon, label: "Registration fee INR 250 each" },
 ];
 
@@ -153,14 +153,15 @@ const HeroSection = () => {
       {/* Collaborators logos — positioned just below the navbar */}
       <div className="absolute top-20 md:top-36 left-1/2 z-20 transform -translate-x-1/2 flex items-center justify-evenly px-6 w-full max-w-xs sm:max-w-lg md:max-w-2xl pointer-events-auto">
         <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/Maadhyamik.jpg" alt="Maadhyamik" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
+          <img src="/m.png" alt="Maadhyamik" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
         </div>
         <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/mongodb.jpg" alt="Mongo" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
+          <img src="/mongo.png" alt="Mongo" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
         </div>
         <div className="flex items-center justify-center w-24 h-16 sm:w-32 sm:h-20 md:w-44 md:h-28 shrink-0">
-          <img src="/ict.jpg" alt="TZB" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
+          <img src="/ict.png" alt="TZB" className="max-w-full max-h-full object-contain brightness-110 contrast-110" />
         </div>
+        
       </div>
       {/* Orb — transparent bg so site background shows through */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -209,7 +210,7 @@ const HeroSection = () => {
           className="text-base md:text-xl text-primary/90 h-7 md:h-8 drop-shadow"
         >
           <TypewriterText
-            texts={["Learn Faster. Build Better.", "Innovate with AI.", "Transform India's Tech Landscape."]}
+            texts={["Learn Faster. Build Better.", "Innovate with AI.", "Transform India's Tech Landscape.","10hrs Industry Hackathon"]}
             speed={70}
           />
         </motion.div>
