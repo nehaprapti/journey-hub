@@ -9,7 +9,7 @@ import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { Link } from "react-router-dom";
 
 const stats = [
-  { icon: Users, label: "1-4 Members per team" },
+  { icon: Users, label: "2-4 Members per team" },
   { icon: MapPin, label: "Sona College of Technology, Salem" },
   { icon: Wifi, label: "Offline" },
   { icon: Trophy, label: "INR 30k Prize Pool" },
@@ -165,10 +165,32 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen overflow-hidden">
-      {/* Collaborators — single morphing logo card */}
-      <div className="absolute top-20 md:top-32 left-1/2 z-20 transform -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-auto">
+      {/* Collaborators — Desktop: All 3 logos in a row */}
+      <div className="absolute top-20 md:top-32 left-1/2 z-20 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2 pointer-events-auto">
+        <p className="text-[10px] font-mono text-primary/60 uppercase tracking-widest mb-1">In collaboration with</p>
+        <div className="flex items-center gap-4">
+          {collaborators.map((collab, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
+              className="flex items-center justify-center w-40 h-24 rounded-2xl border border-green-400/40 bg-white/90 shadow-[0_0_0_1px_rgba(74,222,128,0.3),0_4px_28px_rgba(74,222,128,0.3)] overflow-hidden"
+            >
+              <img
+                src={collab.src}
+                alt={collab.alt}
+                className="max-w-[85%] max-h-[80%] object-contain"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Collaborators — Mobile: Morphing single logo */}
+      <div className="absolute top-20 left-1/2 z-20 transform -translate-x-1/2 flex md:hidden flex-col items-center gap-1.5 pointer-events-auto">
         <p className="text-[10px] font-mono text-primary/60 uppercase tracking-widest">In collaboration with</p>
-        <div className="relative flex items-center justify-center w-[130px] h-[76px] sm:w-44 sm:h-24 md:w-52 md:h-28 rounded-2xl border border-green-400/40 bg-white/90 shadow-[0_0_0_1px_rgba(74,222,128,0.3),0_4px_28px_rgba(74,222,128,0.3)] overflow-hidden">
+        <div className="relative flex items-center justify-center w-[130px] h-[76px] rounded-2xl border border-green-400/40 bg-white/90 shadow-[0_0_0_1px_rgba(74,222,128,0.3),0_4px_28px_rgba(74,222,128,0.3)] overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentLogoIndex}
@@ -182,17 +204,6 @@ const HeroSection = () => {
             />
           </AnimatePresence>
         </div>
-        {/* Dot indicators 
-        <div className="flex gap-1.5 mt-0.5">
-          {collaborators.map((_, i) => (
-            <span
-              key={i}
-              className={`block w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                i === currentLogoIndex ? "bg-primary scale-125" : "bg-primary/30"
-              }`}
-            />
-          ))}
-        </div>*/}
       </div>
       {/* Orb — transparent bg so site background shows through */}
       <div className="absolute inset-0 z-0 pointer-events-none">

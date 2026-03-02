@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -38,6 +38,9 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [brochureOpen, setBrochureOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -52,9 +55,13 @@ const Navbar = () => {
       setMobileOpen(false);
     } else if (href.startsWith("#")) {
       e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       setMobileOpen(false);
+      if (isHome) {
+        const target = document.querySelector(href === "#" ? "body" : href);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        navigate("/" + href);
+      }
     }
   };
 
@@ -66,9 +73,9 @@ const Navbar = () => {
         }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <a href="#" className="text-xl font-bold text-gradient-green font-mono">
+        <Link to="/" className="text-xl font-bold text-gradient-green font-mono">
           TechZeal '26
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">

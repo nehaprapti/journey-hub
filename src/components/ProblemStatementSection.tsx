@@ -1,59 +1,38 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cpu, Globe, Leaf, HeartPulse, GraduationCap } from "lucide-react";
+import { Cpu, HeartPulse, FileDown } from "lucide-react";
 import ParallaxSection from "@/components/effects/ParallaxSection";
 import { gsap } from "gsap";
 
-const problems = [
+const problems: {
+    id: string;
+    icon: React.ElementType;
+    domain: string;
+    color: string;
+    title: string;
+    description: string;
+    tags: string[];
+    download?: { href: string; label: string };
+}[] = [
     {
         id: "PS01",
         icon: Cpu,
-        domain: "Artificial Intelligence",
+        domain: "Natural Language Processing",
         color: "primary",
-        title: "AI-Powered Smart Traffic Management System",
-        description:
-            "Urban traffic congestion leads to massive productivity loss, fuel wastage, and increased pollution. Design an AI-driven solution that uses real-time data from cameras and sensors to dynamically optimize traffic signal timings, detect incidents, and suggest alternate routes — reducing average commute time by at least 30%.",
-        tags: ["Computer Vision", "IoT", "Real-time Analytics"],
+        title: "The Lexifyd Polysemy Challenge",
+        description: "",
+        tags: ["NLP", "Lexical Semantics", "Machine Learning"],
+        download: { href: "/PS01.zip", label: "Click here for problem statement" },
     },
     {
         id: "PS02",
         icon: HeartPulse,
-        domain: "Healthcare",
+        domain: "Information Retrieval / Data Engineering",
         color: "secondary",
-        title: "Predictive Rural Healthcare Diagnostic Tool",
-        description:
-            "Rural communities in India lack access to timely medical diagnosis. Build a lightweight, offline-capable mobile application that leverages machine learning to assist community health workers in early detection of common diseases (diabetes, TB, anaemia) using basic vitals and symptom inputs, with multilingual support.",
-        tags: ["ML", "Mobile App", "Healthcare"],
-    },
-    {
-        id: "PS03",
-        icon: Leaf,
-        domain: "Sustainability",
-        color: "primary",
-        title: "Precision Agriculture & Crop Yield Prediction",
-        description:
-            "Farmers struggle with unpredictable yields due to climate change and lack of data-driven insights. Create a platform that integrates satellite imagery, soil sensor data, and weather forecasts to provide hyper-local crop recommendations, pest alerts, and yield predictions — empowering farmers with actionable intelligence.",
-        tags: ["Satellite Data", "Predictive Modeling", "AgriTech"],
-    },
-    {
-        id: "PS04",
-        icon: Globe,
-        domain: "Cybersecurity",
-        color: "secondary",
-        title: "Real-Time Phishing & Fraud Detection Engine",
-        description:
-            "Digital financial fraud and phishing attacks are rising exponentially, targeting individuals and enterprises alike. Develop a browser extension or API service that uses NLP and behavioral analysis to detect phishing URLs, fraudulent emails, and suspicious transactions in real time, with an explainable AI dashboard.",
-        tags: ["NLP", "Browser Extension", "FinTech Security"],
-    },
-    {
-        id: "PS05",
-        icon: GraduationCap,
-        domain: "EdTech",
-        color: "primary",
-        title: "Adaptive Personalized Learning Platform",
-        description:
-            "One-size-fits-all education fails to address diverse learning paces and styles. Build an adaptive learning system that continuously assesses student performance, identifies knowledge gaps, and dynamically curates personalized content paths — integrating gamification elements to boost engagement and retention.",
-        tags: ["Adaptive Learning", "Gamification", "Data Analytics"],
+        title: "Enhancing User Experience in a Movie Database Website with MongoDB Atlas Search",
+        description: "",
+        tags: ["MongoDB", "Atlas Search", "Information Retrieval"],
+        download: { href: "/PS02.pdf", label: "Click here for problem statement" },
     },
 ];
 
@@ -193,9 +172,11 @@ function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
                                 <div className={`h-px mb-4 ${dividerCls}`} />
 
                                 {/* Description */}
-                                <p className="text-base text-white/75 leading-relaxed mb-4">
-                                    {p.description}
-                                </p>
+                                {p.description && (
+                                    <p className="text-base text-white/75 leading-relaxed mb-4">
+                                        {p.description}
+                                    </p>
+                                )}
 
                                 {/* Tags */}
                                 <div className="flex flex-wrap gap-2 mb-4">
@@ -208,6 +189,23 @@ function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
                                         </span>
                                     ))}
                                 </div>
+
+                                {/* Download link */}
+                                {p.download && (
+                                    <a
+                                        href={p.download.href}
+                                        download
+                                        onClick={(e) => e.stopPropagation()}
+                                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-xs font-medium transition-colors ${
+                                            isPrimary
+                                                ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/20"
+                                                : "border-secondary/40 bg-secondary/10 text-secondary hover:bg-secondary/20"
+                                        }`}
+                                    >
+                                        <FileDown size={14} />
+                                        {p.download.label}
+                                    </a>
+                                )}
                             </div>
                         </motion.div>
                     )}
@@ -248,7 +246,7 @@ const ProblemStatementSection = () => {
                             Choose Your <span className="text-gradient-green">Challenge</span>
                         </h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-                            Five real-world problem domains. One hackathon. Infinite possibilities.{" "}
+                            Two real-world problem domains. One hackathon. Infinite possibilities.{" "}
                             <span className="text-primary font-medium">Click</span> a card to reveal the full statement.
                         </p>
                     </motion.div>
@@ -268,8 +266,7 @@ const ProblemStatementSection = () => {
                     viewport={{ once: true }}
                     className="text-center text-xs text-muted-foreground mt-12 font-mono"
                 >
-                    * Detailed problem statement briefs will be shared with registered teams before the event.
-                </motion.p>
+                                    </motion.p>
             </div>
         </section>
     );

@@ -25,19 +25,19 @@ const Registration = () => {
     {
       icon: Users,
       title: "Team Size",
-      description: "1-4 Members per team",
+      description: "2-4 Members per team",
     },
     {
       icon: Trophy,
       title: "Prize Pool",
-      description: "INR 50,000 Worth Prizes",
+      description: "INR 30,000 Worth Prizes",
     },
   ];
 
   const steps = [
     "Complete the registration form with your team details",
     "Choose your preferred problem statement",
-    "Submit your proposed solution (PPT format, max 10 slides)",
+    "Submit your proposed solution (PPT format, word format)",
     "Wait for shortlist announcement",
     "Shortlisted teams pay ₹250 per member",
     "Prepare for the Grand Finale!",

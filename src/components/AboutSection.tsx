@@ -17,7 +17,7 @@ import {
 // participants section removed per request
 
 const benefits = [
-  { icon: Trophy, title: "Prize Pool", desc: "INR 50,000 for top teams across Student tracks.", value: 30000, prefix: "₹", suffix: "+" },
+  { icon: Trophy, title: "Prize Pool", desc: "INR 30,000 for top teams across Student tracks.", value: 30000, prefix: "₹", suffix: "+" },
   { icon: Award, title: "Certificate", desc: "Merit certificates will be awarded to all winning teams and All cipants will receive a Participation Certificate." },
   { icon: Network, title: "Networking", desc: "Connect with developers across India and collaborate." },
 ];
@@ -65,9 +65,10 @@ const AboutSection = () => {
             <div className="order-3 md:order-3">
               <p className="text-muted-foreground leading-relaxed text-lg">
                 <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> (PHYSICAL MODE) is a <span className="text-gradient-purple font-semibold">10 Hours State Level Hackathon</span> contest organized by the <span className="text-gradient-green font-semibold">Department of Information Technology, Sona College of Technology</span>, Salem, Tamilnadu in collaboration with industry partners{" "}
-                <span className="text-gradient-green font-semibold">MongoDB</span>,{" "}
-                <span className="text-gradient-green font-semibold">ICT Academy</span>, and{" "}
-                <span className="text-gradient-green font-semibold">Maadhyamik Technologies</span>.{" "}
+                <span className="text-gradient-green font-semibold">Maadhyamik Technologies</span>,{" "}
+                <span className="text-gradient-green font-semibold">MongoDB</span>, and{" "}
+                <span className="text-gradient-green font-semibold">ICT Academy</span>. {" "}
+                
                 <br></br>
                 <span className="text-gradient-purple font-semibold">TECH ZEAL 2026</span> provides a platform for engineering college students to come with an effective solution for problems that we face in our day to day life. 
                 <span className="text-gradient-green font-semibold">technically enriched students to come up with innovative solutions</span>. {" "}

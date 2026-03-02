@@ -3,23 +3,21 @@ import { useRef } from "react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const steps = [
-  { step: "01", title: "Register for the Hackathon", color: "primary" },
-  { step: "02", title: "Idea confirmation End Date", color: "secondary" },
+  { step: "01", title: "Register & Submit Idea", color: "primary" },
+  { step: "02", title: "Online Presentation", color: "secondary" },
   { step: "03", title: "Grand Finale", color: "primary" },
 ];
 
 const timeline = [
-  { event: "Registrations Begin", date: "Feb 16, 2026", color: "primary" },
-  { event: "Idea Confirmation End Date", date: "Mar 20, 2026", color: "secondary" },
+  { event: "Registrations Begin", date: "Mar 01, 2026", color: "primary" },
+  { event: "Idea Submission Deadline", date: "Mar 20, 2026", color: "secondary" },
+  { event: "Online Presentations", date: "Mar 21-22, 2026", color: "primary" },
+  { event: "Shortlist Announcement", date: "Mar 24, 2026", color: "secondary" },
   { event: "Grand Finale", date: "Mar 28, 2026", color: "primary" },
 ];
 
-const DOT_SIZE = 20;   // px
-const STEM_H = 48;   // px — stem between dot and card
-const CARD_H = 80;   // px — approximate card height
-// Total height of the timeline container
-// above: CARD_H + STEM_H + dot_radius  |  below: dot_radius + STEM_H + CARD_H
-const CONTAINER_H = CARD_H + STEM_H + DOT_SIZE / 2 + STEM_H + CARD_H; // ~288px
+const DOT_SIZE = 20;
+const CARD_AREA_H = 120; // height reserved above/below line for card+stem
 
 const JourneySection = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -28,9 +26,6 @@ const JourneySection = () => {
     offset: ["start end", "end start"],
   });
   const lineWidth = useTransform(scrollYProgress, [0.1, 0.8], ["0%", "100%"]);
-
-  // The horizontal line sits at the vertical midpoint
-  const lineTop = CARD_H + STEM_H; // px from top of container
 
   return (
     <section id="journey" className="section-padding relative overflow-hidden">
@@ -94,85 +89,97 @@ const JourneySection = () => {
         </motion.div>
 
         {/* ── Horizontal Timeline ── */}
-        <div
-          ref={timelineRef}
-          className="relative w-full"
-          style={{ height: `${CONTAINER_H}px` }}
-        >
-          {/* ── Horizontal line (sits at lineTop) ── */}
+        <div className="overflow-x-auto">
           <div
-            className="absolute left-0 right-0 h-[2px] bg-border/30 rounded-full"
-            style={{ top: lineTop }}
-          />
-          <motion.div
-            className="absolute left-0 h-[2px] rounded-full bg-gradient-to-r from-primary via-secondary to-primary"
-            style={{ top: lineTop, width: lineWidth }}
-          />
+            ref={timelineRef}
+            className="relative min-w-[700px]"
+            style={{ height: `${CARD_AREA_H * 2 + DOT_SIZE}px` }}
+          >
+            {/* Animated progress line — sits at vertical midpoint */}
+            <div
+              className="absolute left-0 right-0 h-[2px] bg-border/30 rounded-full"
+              style={{ top: `${CARD_AREA_H}px` }}
+            />
+            <motion.div
+              className="absolute left-0 h-[2px] rounded-full bg-gradient-to-r from-primary via-secondary to-primary"
+              style={{ top: `${CARD_AREA_H}px`, width: lineWidth }}
+            />
 
-          {/* ── Dots + stems + cards ── */}
-          {timeline.map((item, i) => {
-            const isPrimary = item.color === "primary";
-            const isAbove = i % 2 === 0; // 0,2 → card above line; 1 → card below
+            {/* ── One column per timeline item ── */}
+            <div className="absolute inset-0 flex">
+              {timeline.map((item, i) => {
+                const isPrimary = item.color === "primary";
+                const isAbove = i % 2 === 0;
 
-            // Horizontal position: evenly spaced at 16.5%, 50%, 83.5%
-            const leftPct = `${16.5 + i * 33.5}%`;
+                return (
+                  <motion.div
+                    key={item.event}
+                    initial={{ opacity: 0, y: isAbove ? -20 : 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.15, duration: 0.5 }}
+                    className="flex-1 flex flex-col items-center"
+                  >
+                    {/* ── Top half: card if isAbove, else empty ── */}
+                    <div
+                      className="flex flex-col items-center justify-end w-full"
+                      style={{ height: `${CARD_AREA_H}px` }}
+                    >
+                      {isAbove ? (
+                        <>
+                          <div
+                            className={`glass-card p-3 text-center transition-all duration-300 w-[130px] group cursor-default ${isPrimary ? "hover:border-primary/40" : "hover:border-secondary/40"}`}
+                          >
+                            <p className="text-xs font-semibold text-foreground leading-snug">{item.event}</p>
+                            <p className={`text-[11px] font-mono mt-1.5 ${isPrimary ? "text-primary" : "text-secondary"}`}>
+                              {item.date}
+                            </p>
+                          </div>
+                          {/* stem below card */}
+                          <div className={`w-px flex-1 ${isPrimary ? "bg-primary/40" : "bg-secondary/40"}`} />
+                        </>
+                      ) : (
+                        <div className="flex-1" />
+                      )}
+                    </div>
 
-            // Dot top = lineTop - dot_radius (so dot centre sits exactly on line)
-            const dotTop = lineTop - DOT_SIZE / 2;
+                    {/* ── Dot on the line ── */}
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex-shrink-0 z-10 transition-all duration-300 ${
+                        isPrimary
+                          ? "border-primary bg-background hover:bg-primary hover:shadow-[0_0_16px_hsl(142_60%_55%/0.7)]"
+                          : "border-secondary bg-background hover:bg-secondary hover:shadow-[0_0_16px_hsl(262_60%_65%/0.7)]"
+                      }`}
+                      style={{ marginTop: `-${DOT_SIZE / 2}px`, marginBottom: `-${DOT_SIZE / 2}px` }}
+                    />
 
-            // Stem: connects dot edge to card
-            const stemTop = isAbove ? dotTop - STEM_H : dotTop + DOT_SIZE;
-            const cardTop = isAbove ? stemTop - CARD_H : stemTop + STEM_H;
-
-            return (
-              <motion.div
-                key={item.event}
-                initial={{ opacity: 0, y: isAbove ? -16 : 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
-                className="absolute group"
-                style={{ left: leftPct, transform: "translateX(-50%)" }}
-              >
-                {/* Dot */}
-                <div
-                  className={`absolute w-5 h-5 rounded-full border-2 transition-all duration-300 ${isPrimary
-                      ? "border-primary bg-background group-hover:bg-primary group-hover:shadow-[0_0_16px_hsl(142_60%_55%/0.7)]"
-                      : "border-secondary bg-background group-hover:bg-secondary group-hover:shadow-[0_0_16px_hsl(262_60%_65%/0.7)]"
-                    }`}
-                  style={{ top: dotTop, left: "50%", transform: "translateX(-50%)" }}
-                />
-
-                {/* Stem */}
-                <div
-                  className={`absolute w-px ${isPrimary ? "bg-primary/40" : "bg-secondary/40"}`}
-                  style={{
-                    top: stemTop,
-                    height: STEM_H,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  }}
-                />
-
-                {/* Card */}
-                <div
-                  className={`absolute glass-card p-4 text-center transition-all duration-300 ${isPrimary ? "group-hover:border-primary/40" : "group-hover:border-secondary/40"
-                    }`}
-                  style={{
-                    top: cardTop,
-                    width: "160px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  }}
-                >
-                  <p className="text-sm font-semibold text-foreground leading-snug">{item.event}</p>
-                  <p className={`text-xs font-mono mt-1.5 ${isPrimary ? "text-primary" : "text-secondary"}`}>
-                    {item.date}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+                    {/* ── Bottom half: card if !isAbove, else empty ── */}
+                    <div
+                      className="flex flex-col items-center justify-start w-full"
+                      style={{ height: `${CARD_AREA_H}px` }}
+                    >
+                      {!isAbove ? (
+                        <>
+                          {/* stem above card */}
+                          <div className={`w-px flex-1 ${isPrimary ? "bg-primary/40" : "bg-secondary/40"}`} />
+                          <div
+                            className={`glass-card p-3 text-center transition-all duration-300 w-[130px] group cursor-default ${isPrimary ? "hover:border-primary/40" : "hover:border-secondary/40"}`}
+                          >
+                            <p className="text-xs font-semibold text-foreground leading-snug">{item.event}</p>
+                            <p className={`text-[11px] font-mono mt-1.5 ${isPrimary ? "text-primary" : "text-secondary"}`}>
+                              {item.date}
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex-1" />
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <motion.p

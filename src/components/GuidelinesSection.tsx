@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import ParallaxSection from "@/components/effects/ParallaxSection";
 import MagicBento from "@/components/MagicBento";
+import { FileDown } from "lucide-react";
 
 const GuidelinesSection = () => {
   const items = [
@@ -19,11 +20,29 @@ const GuidelinesSection = () => {
       title: "3. Idea Submission",
       content: (
         <div>
-          <p>Teams must briefly describe their idea and submit it in both Word and PPT (maximum 10 slides) formats using the provided templates (Word template and PPT template).</p>
-          <p className="mt-2">All teams should complete their registration and upload the files through the registration form within the specified timeline. (Registration form)</p>
+          <p>Teams must briefly describe their idea and submit it in both Word and PPT (maximum 10 slides) formats using the provided templates.</p>
+          <div className="flex flex-wrap gap-3 mt-3">
+            <a
+              href="/Team_Name-Idea_Title.docx"
+              download
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-primary/40 bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
+            >
+              <FileDown size={13} />
+              Download Word Template
+            </a>
+            <a
+              href="/TechZeal2k26 Template.pptx"
+              download
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-secondary/40 bg-secondary/10 text-secondary text-xs font-medium hover:bg-secondary/20 transition-colors"
+            >
+              <FileDown size={13} />
+              Download PPT Template
+            </a>
+          </div>
+          <p className="mt-3">All teams should complete their registration and upload the files through the registration form within the specified timeline. (<a href="https://forms.gle/259zjaLWZGnamYa7A" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">Registration form</a>)</p>
           <ul className="list-disc ml-5 mt-2">
-            <li>Registration Start Date: 01.03.2026</li>
-            <li>Idea Submission Deadline: 20.03.2026</li>
+            <li>Registration Start Date: <span className="text-primary font-semibold">01.03.2026</span></li>
+            <li>Idea Submission Deadline: <span className="text-primary font-semibold">20.03.2026</span></li>
           </ul>
         </div>
       ),
@@ -35,9 +54,9 @@ const GuidelinesSection = () => {
           <p>All registered teams will present their idea in an online presentation. The meeting link will be shared via email.</p>
           <p className="mt-2">After the online presentations, shortlisted teams will be notified via email along with payment instructions for the Grand Finale.</p>
           <ul className="list-disc ml-5 mt-2">
-            <li>Online Presentation Dates: 21.03.2026 & 22.03.2026</li>
-            <li>Idea Confirmation Date: 24.03.2026</li>
-            <li>Grand Finale: 28.03.2026</li>
+            <li>Online Presentation Dates: <span className="text-primary font-semibold">21.03.2026 &amp; 22.03.2026</span></li>
+            <li>Idea Confirmation Date: <span className="text-primary font-semibold">24.03.2026</span></li>
+            <li>Grand Finale: <span className="text-primary font-semibold">28.03.2026</span></li>
           </ul>
         </div>
       ),
@@ -55,7 +74,7 @@ const GuidelinesSection = () => {
       title: "6. Grand Finale (Offline Mode)",
       content: (
         <div>
-          <p>The Grand Finale will be held as a 10-hour offline hackathon, from 09:00 AM to 07:00 PM.</p>
+          <p>The Grand Finale will be held as a 10-hour offline hackathon, from <span className="text-primary font-semibold">09:00 AM</span> to <span className="text-primary font-semibold">07:00 PM</span>.</p>
           <p className="mt-2">At the start of the event, organizers will brief all teams about the evaluation criteria and process. Multiple evaluation rounds will be conducted throughout the hackathon duration.</p>
         </div>
       ),
