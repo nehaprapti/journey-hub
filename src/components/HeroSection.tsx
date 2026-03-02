@@ -6,6 +6,7 @@ import Orb from "@/components/effects/Orb";
 import { useTheme } from "next-themes";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
+import { Link } from "react-router-dom";
 
 const stats = [
   { icon: Users, label: "1-4 Members per team" },
@@ -174,7 +175,7 @@ const HeroSection = () => {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-5 md:mb-8"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-          <span className="text-xs font-mono text-primary">Hackathon Phase is Live</span>
+          <span className="text-xs font-mono text-primary">Organized by Department of Information Technology</span>
         </motion.div>
 
         {/* Title */}
@@ -213,9 +214,9 @@ const HeroSection = () => {
           className="flex flex-row gap-3 md:gap-4 justify-center"
         >
           <Button variant="hero" size="lg" asChild>
-            <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer">
+            <Link to="/register">
               Register Now
-            </a>
+            </Link>
           </Button>
           <Button variant="hero-outline" size="lg" asChild>
             <a href="#about">Learn More</a>

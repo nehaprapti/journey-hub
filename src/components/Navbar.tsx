@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { Link } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -96,9 +97,9 @@ const Navbar = () => {
           <AnimatedThemeToggler />
 
           <Button variant="hero" size="sm" asChild>
-            <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer">
+            <Link to="/register">
               Register Now
-            </a>
+            </Link>
           </Button>
         </div>
 
@@ -129,9 +130,9 @@ const Navbar = () => {
             </a>
           ))}
           <Button variant="hero" size="sm" className="w-full mt-2" asChild>
-            <a href="https://forms.gle/xZ2RnPT3cnZ28QfX7" target="_blank" rel="noopener noreferrer">
+            <Link to="/register">
               Register Now
-            </a>
+            </Link>
           </Button>
         </motion.div>
       )}

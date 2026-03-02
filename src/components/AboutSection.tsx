@@ -17,7 +17,7 @@ import {
 // participants section removed per request
 
 const benefits = [
-  { icon: Trophy, title: "Prize Pool", desc: "INR 50,000 for top teams across Student tracks.", value: 50000, prefix: "₹", suffix: "+" },
+  { icon: Trophy, title: "Prize Pool", desc: "INR 50,000 for top teams across Student tracks.", value: 30000, prefix: "₹", suffix: "+" },
   { icon: Award, title: "Certificate", desc: "Merit certificates will be awarded to all winning teams and All cipants will receive a Participation Certificate." },
   { icon: Network, title: "Networking", desc: "Connect with developers across India and collaborate." },
 ];

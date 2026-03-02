@@ -8,31 +8,37 @@ const GuidelinesSection = () => {
     {
       title: "1. Team Formation",
       content: (
-        <p>Students must form a team consisting of a minimum of 1 and a maximum of 4 members.</p>
+        <p>Each team must consist of a minimum of 2 members and a maximum of 4 members.</p>
       ),
     },
     {
-      title: "2. Team Limit",
-      content: <p>Each team is allowed to register for only one Problem Statement.</p>,
+      title: "2. Team Registration Limit",
+      content: <p>A team is permitted to register for only one Problem Statement.</p>,
     },
     {
-      title: "3. Idea Nomination",
+      title: "3. Idea Submission",
       content: (
         <div>
-          <p>A maximum of 20 registrations are allowed per Problem Statement. Teams must complete the registration process within the given timeline by filling out the registration form link.</p>
+          <p>Teams must briefly describe their idea and submit it in both Word and PPT (maximum 10 slides) formats using the provided templates (Word template and PPT template).</p>
+          <p className="mt-2">All teams should complete their registration and upload the files through the registration form within the specified timeline. (Registration form)</p>
           <ul className="list-disc ml-5 mt-2">
-            <li>Registration Start Date: 16.02.2026</li>
-            <li>Idea Confirmation Date: 20.03.2026</li>
+            <li>Registration Start Date: 01.03.2026</li>
+            <li>Idea Submission Deadline: 20.03.2026</li>
           </ul>
         </div>
       ),
     },
     {
-      title: "4. Selection and Shortlisting",
+      title: "4. Selection & Shortlisting Process",
       content: (
         <div>
-          <p>All registered teams are required to submit their proposed solution in PPT format with a maximum limit of 10 slides through the provided Google Forms link.</p>
-          <p className="mt-2">After our evaluation, the top 5 teams per Problem Statement will be shortlisted and announced for the Grand Finale.</p>
+          <p>All registered teams will present their idea in an online presentation. The meeting link will be shared via email.</p>
+          <p className="mt-2">After the online presentations, shortlisted teams will be notified via email along with payment instructions for the Grand Finale.</p>
+          <ul className="list-disc ml-5 mt-2">
+            <li>Online Presentation Dates: 21.03.2026 & 22.03.2026</li>
+            <li>Idea Confirmation Date: 24.03.2026</li>
+            <li>Grand Finale: 28.03.2026</li>
+          </ul>
         </div>
       ),
     },
@@ -40,17 +46,17 @@ const GuidelinesSection = () => {
       title: "5. Registration Fee",
       content: (
         <div>
-          <p>Only shortlisted teams can proceed with payment. After the shortlisted teams are announced, participants must pay a registration fee of ₹250 each to confirm their participation in the Grand Finale.</p>
-          <p className="mt-2 text-xs text-muted-foreground">(Payment details and instructions will be shared with shortlisted teams through email by the organizers.)</p>
+          <p>Only the shortlisted teams are required to pay the registration fee.</p>
+          <p className="mt-2">Each participant must pay ₹250 to confirm their participation in the Grand Finale.</p>
         </div>
       ),
     },
     {
-      title: "6. Grand Finale (OFFLINE MODE)",
+      title: "6. Grand Finale (Offline Mode)",
       content: (
         <div>
-          <p>The Grand Finale will be conducted as a 10-hour OFFLINE Hackathon.</p>
-          <p className="mt-2">All participating teams will be briefed about the evaluation process by the organizers at the start of the event. The evaluation will consist of multiple rounds conducted during the hackathon period.</p>
+          <p>The Grand Finale will be held as a 10-hour offline hackathon, from 09:00 AM to 07:00 PM.</p>
+          <p className="mt-2">At the start of the event, organizers will brief all teams about the evaluation criteria and process. Multiple evaluation rounds will be conducted throughout the hackathon duration.</p>
         </div>
       ),
     },
