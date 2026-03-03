@@ -9,6 +9,7 @@ import GuidelinesSection from "@/components/GuidelinesSection";
 import CommitteeSection from "@/components/CommitteeSection";
 import InvestorsSection from "@/components/InvestorsSection";
 import ContactSection from "@/components/ContactSection";
+import TechTeamSection from "@/components/TechTeamSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -39,6 +40,7 @@ const Index = () => {
             <CommitteeSection />
             <InvestorsSection />
             <ContactSection />
+            <TechTeamSection />
             <Footer />
         </div>
     );
