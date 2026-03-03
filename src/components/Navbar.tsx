@@ -73,8 +73,10 @@ const Navbar = () => {
         }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="text-xl font-bold text-gradient-green font-mono">
-          TechZeal '26
+        
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/sona.png" alt="Sona College of Technology" className="h-8 w-auto" />
+          <span className="text-xl font-bold text-gradient-green font-mono">TechZeal '26</span>
         </Link>
 
         {/* Desktop nav */}

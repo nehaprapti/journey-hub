@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Phone } from "lucide-react";
 import SpotlightCard from "@/components/effects/SpotlightCard";
 
 const committee = [
@@ -25,8 +26,8 @@ const committee = [
     color: "primary",
     badge: "CC",
     items: [
-      { name: "Mr. R. Krishna Prakash" },
-      { name: "Mr. P. Dineshkumar" },
+      { name: "Mr. R. Krishna Prakash", phone: "9043215401" },
+      { name: "Mr. P. Dineshkumar", phone: "9944035505" },
       { name: "Mrs. M. Parameswari" },
     ],
   },
@@ -50,7 +51,7 @@ const fadeUp = {
 
 // Flatten all members into individual cards, carrying group info
 const allMembers = committee.flatMap((g) =>
-  g.items.map((item) => ({
+  g.items.map((item: { name: string; role?: string; phone?: string }) => ({
     ...item,
     group: g.group,
     color: g.color,
@@ -95,26 +96,45 @@ const CommitteeSection = () => {
               viewport={{ once: true, margin: "-30px" }}
               variants={fadeUp}
             >
-              <SpotlightCard className="p-4 h-full flex flex-col justify-center text-center gap-2 hover:border-border/80 transition-all group">
-                {/* Name */}
-                <div>
-                  <p className="text-sm font-semibold text-foreground leading-snug">
-                    {member.name}
-                  </p>
-                  {member.role && (
-                    <p className="text-xs text-muted-foreground mt-1">{member.role}</p>
-                  )}
+              <SpotlightCard className="relative p-4 h-full flex flex-col justify-center text-center gap-2 hover:border-border/80 transition-all group overflow-hidden">
+                {/* Default content */}
+                <div className={`flex flex-col items-center gap-2 ${member.phone ? "transition-all duration-300 group-hover:opacity-0 group-hover:scale-95" : ""}`}>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground leading-snug">
+                      {member.name}
+                    </p>
+                    {member.role && (
+                      <p className="text-xs text-muted-foreground mt-1">{member.role}</p>
+                    )}
+                  </div>
+                  <span
+                    className={`text-[10px] font-mono px-2 py-0.5 rounded-full border mx-auto ${member.color === "primary"
+                        ? "border-primary/30 text-primary bg-primary/8"
+                        : "border-secondary/30 text-secondary bg-secondary/8"
+                      }`}
+                  >
+                    {member.group}
+                  </span>
                 </div>
 
-                {/* Group pill */}
-                <span
-                  className={`text-[10px] font-mono px-2 py-0.5 rounded-full border mx-auto ${member.color === "primary"
-                      ? "border-primary/30 text-primary bg-primary/8"
-                      : "border-secondary/30 text-secondary bg-secondary/8"
-                    }`}
-                >
-                  {member.group}
-                </span>
+                {/* Hover reveal — phone */}
+                {member.phone ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 px-3">
+                    <p className="text-xs font-semibold text-foreground leading-snug text-center">{member.name}</p>
+                    <a
+                      href={`tel:${member.phone}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className={`inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-full border transition-colors ${
+                        member.color === "primary"
+                          ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/20"
+                          : "border-secondary/40 bg-secondary/10 text-secondary hover:bg-secondary/20"
+                      }`}
+                    >
+                      <Phone size={11} />
+                      {member.phone}
+                    </a>
+                  </div>
+                ) : null}
               </SpotlightCard>
             </motion.div>
           ))}

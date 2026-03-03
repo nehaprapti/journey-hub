@@ -12,7 +12,7 @@ const stats = [
   { icon: Users, label: "2-4 Members per team" },
   { icon: MapPin, label: "Sona College of Technology, Salem" },
   { icon: Wifi, label: "Offline" },
-  { icon: Trophy, label: "INR 30k Prize Pool" },
+  
   { icon: NotebookPenIcon, label: "Registration fee INR 250 each" },
 ];
 
@@ -260,6 +260,19 @@ const HeroSection = () => {
 
       {/* ── Buttons + Stats + Scroll — normal flow below the orb area ── */}
       <div className="relative z-10 flex flex-col items-center justify-end min-h-screen px-4 pb-8 pt-8 gap-5">
+        {/* Prize Pool Badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.75 }}
+          className="flex justify-center"
+        >
+          <div className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-yellow-400/60 bg-yellow-400/10 text-yellow-300 backdrop-blur-sm text-sm font-semibold shadow-[0_0_18px_rgba(250,204,21,0.25)]">
+            <Trophy size={17} className="text-yellow-400" />
+            <span>INR 30k Prize Pool</span>
+          </div>
+        </motion.div>
+
         {/* CTA buttons */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}

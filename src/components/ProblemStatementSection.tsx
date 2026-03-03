@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cpu, HeartPulse, FileDown } from "lucide-react";
+import { Cpu, HeartPulse, FileDown, Building2 } from "lucide-react";
 import ParallaxSection from "@/components/effects/ParallaxSection";
 import { gsap } from "gsap";
 
@@ -12,6 +12,7 @@ const problems: {
     title: string;
     description: string;
     tags: string[];
+    sponsor: string;
     download?: { href: string; label: string };
 }[] = [
     {
@@ -22,7 +23,8 @@ const problems: {
         title: "The Lexifyd Polysemy Challenge",
         description: "",
         tags: ["NLP", "Lexical Semantics", "Machine Learning"],
-        download: { href: "/PS01.zip", label: "Click here for problem statement" },
+        sponsor: "Maadhyamik Technologies",
+        download: { href: "/PS01.pdf", label: "Click here for problem statement" },
     },
     {
         id: "PS02",
@@ -32,6 +34,7 @@ const problems: {
         title: "Enhancing User Experience in a Movie Database Website with MongoDB Atlas Search",
         description: "",
         tags: ["MongoDB", "Atlas Search", "Information Retrieval"],
+        sponsor: "MongoDB",
         download: { href: "/PS02.pdf", label: "Click here for problem statement" },
     },
 ];
@@ -136,9 +139,15 @@ function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
                 {/* ── Collapsed / front row ── */}
                 <div className="flex flex-col px-8 py-6 gap-3">
                     {/* Badge row */}
-                    <span className={`self-start text-xs font-mono font-bold px-3 py-0.5 rounded-full border whitespace-nowrap ${badgeCls}`}>
-                        {p.id} · {p.domain}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                        <span className={`text-xs font-mono font-bold px-3 py-0.5 rounded-full border whitespace-nowrap ${badgeCls}`}>
+                            {p.id} · {p.domain}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-0.5 rounded-full border border-white/20 bg-white/10 text-white/80 whitespace-nowrap">
+                            <Building2 size={12} />
+                            {p.sponsor}
+                        </span>
+                    </div>
 
                     {/* Icon + Title + hint on same line */}
                     <div className="flex flex-row items-center gap-4">
@@ -245,8 +254,9 @@ const ProblemStatementSection = () => {
                         <h2 className="text-3xl md:text-5xl font-bold mb-4">
                             Choose Your <span className="text-gradient-green">Challenge</span>
                         </h2>
-                        <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-                            Two real-world problem domains. One hackathon. Infinite possibilities.{" "}
+                        <p className="text-muted-foreground max-w-6xl mx-auto text-lg leading-relaxed">
+                            Two real-world problem domains given by Maadhyamik Technologies and MongoDB. One hackathon. Infinite possibilities.{" "}
+                            <br></br>
                             <span className="text-primary font-medium">Click</span> a card to reveal the full statement.
                         </p>
                     </motion.div>
