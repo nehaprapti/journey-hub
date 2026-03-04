@@ -7,7 +7,7 @@ const committee = [
     group: "Organization Committee",
     color: "primary",
     badge: "OC",
-    items: [{ name: "Dr. J. Akilandeswari", role: "Convener" }],
+    items: [{ name: "Dr. J. Akilandeswari", badge: "Convener" }],
   },
   {
     group: "Coordinators",
@@ -51,11 +51,12 @@ const fadeUp = {
 
 // Flatten all members into individual cards, carrying group info
 const allMembers = committee.flatMap((g) =>
-  g.items.map((item: { name: string; role?: string; phone?: string }) => ({
+  g.items.map((item: { name: string; role?: string; phone?: string; badge?: string }) => ({
     ...item,
     group: g.group,
     color: g.color,
     badge: g.badge,
+    itemBadge: item.badge, // custom per-item badge (e.g., Convener for Akilandeswari)
   }))
 );
 
@@ -113,7 +114,7 @@ const CommitteeSection = () => {
                         : "border-secondary/30 text-secondary bg-secondary/8"
                       }`}
                   >
-                    {member.group}
+                    {member.itemBadge ?? member.group}
                   </span>
                 </div>
 
