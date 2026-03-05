@@ -137,11 +137,17 @@ function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
                 transition={{ layout: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } }}
             >
                 {/* ── Collapsed / front row ── */}
-                <div className="flex flex-col px-8 py-6 gap-3">
+                <div className="flex flex-col px-4 sm:px-8 py-6 gap-3">
                     {/* Badge row */}
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className={`text-xs font-mono font-bold px-3 py-0.5 rounded-full border whitespace-nowrap ${badgeCls}`}>
-                            {p.id} · {p.domain}
+                        <span className={`text-xs font-mono font-bold px-3 py-0.5 rounded-full border sm:whitespace-nowrap ${badgeCls}`}>
+                            {p.id} · {p.domain.includes("/")
+                                ? <>
+                                    {p.domain.split("/")[0].trim()}
+                                    <br className="sm:hidden" />
+                                    {"/ " + p.domain.split("/")[1].trim()}
+                                  </>
+                                : p.domain}
                         </span>
                         <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-0.5 rounded-full border border-white/20 bg-white/10 text-white/80 whitespace-nowrap">
                             <Building2 size={12} />
@@ -176,7 +182,7 @@ function ProblemCard({ p, i }: { p: (typeof problems)[0]; i: number }) {
                             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                             className="overflow-hidden"
                         >
-                            <div className="px-8 pt-2 pb-8">
+                            <div className="px-4 sm:px-8 pt-2 pb-8">
                                 {/* Divider */}
                                 <div className={`h-px mb-4 ${dividerCls}`} />
 
