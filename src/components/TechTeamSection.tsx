@@ -3,7 +3,7 @@ import { Linkedin } from "lucide-react";
 
 const team = [
   {
-    name: "Neha Prapti",
+    name: "Neha Prapti P",
     dept: "Dept of IT",
     linkedin: "https://www.linkedin.com/in/neha-prapti",
     color: "primary",

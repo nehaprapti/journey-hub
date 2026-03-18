@@ -10,9 +10,9 @@ const steps = [
 
 const timeline = [
   { event: "Registrations Begin", date: "Mar 01, 2026", color: "primary" },
-  { event: "Idea Submission Deadline", date: "Mar 20, 2026", color: "secondary" },
-  { event: "Online Presentations", date: "Mar 21-22, 2026", color: "primary" },
-  { event: "Shortlist Announcement", date: "Mar 24, 2026", color: "secondary" },
+  { event: "Idea Submission Deadline", date: "Mar 23, 2026", originalDate: "Mar 20, 2026", color: "secondary" },
+  { event: "Online Presentations", date: "Mar 24-25, 2026", originalDate: "Mar 21-22, 2026", color: "primary" },
+  { event: "Shortlist Announcement", date: "Mar 26, 2026", originalDate: "Mar 24, 2026", color: "secondary" },
   { event: "Grand Finale", date: "Mar 28, 2026", color: "primary" },
 ];
 
@@ -132,6 +132,9 @@ const JourneySection = () => {
                           >
                             <p className="text-xs font-semibold text-foreground leading-snug">{item.event}</p>
                             <p className={`text-[11px] font-mono mt-1.5 ${isPrimary ? "text-primary" : "text-secondary"}`}>
+                              {item.originalDate ? (
+                                <span className="line-through text-muted-foreground mr-2">{item.originalDate}</span>
+                              ) : null}
                               {item.date}
                             </p>
                           </div>
@@ -167,6 +170,9 @@ const JourneySection = () => {
                           >
                             <p className="text-xs font-semibold text-foreground leading-snug">{item.event}</p>
                             <p className={`text-[11px] font-mono mt-1.5 ${isPrimary ? "text-primary" : "text-secondary"}`}>
+                              {item.originalDate ? (
+                                <span className="line-through text-muted-foreground mr-2">{item.originalDate}</span>
+                              ) : null}
                               {item.date}
                             </p>
                           </div>
