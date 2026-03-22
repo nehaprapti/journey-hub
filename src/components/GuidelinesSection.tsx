@@ -50,8 +50,7 @@ const GuidelinesSection = () => {
       title: "4. Selection & Shortlisting Process",
       content: (
         <div>
-          <p>All registered teams will present their idea in an online presentation. The meeting link will be shared via email.</p>
-          <p className="mt-2">After the online presentations, shortlisted teams will be notified via email along with payment instructions for the Grand Finale.</p>
+          <p> All the registered teams will be  shortlisted and notified via email along with payment instructions for the Grand Finale.</p>
           <ul className="list-disc ml-5 mt-2">
             <li>Idea Submission Date: <span className="text-primary font-semibold">24.03.2026</span></li> 
             <li>Shortlist Announcement: <span className="text-primary font-semibold">26.03.2026</span></li>
