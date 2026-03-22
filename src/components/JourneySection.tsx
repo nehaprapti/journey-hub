@@ -10,8 +10,7 @@ const steps = [
 
 const timeline = [
   { event: "Registrations Begin", date: "Mar 01, 2026", color: "primary" },
-  { event: "Idea Submission Deadline", date: "Mar 23, 2026", originalDate: "Mar 20, 2026", color: "secondary" },
-  { event: "Online Presentations", date: "Mar 24-25, 2026", originalDate: "Mar 21-22, 2026", color: "primary" },
+  { event: "Idea Submission Deadline", date: "Mar 24, 2026", originalDate: "Mar 20, 2026", color: "secondary" },
   { event: "Shortlist Announcement", date: "Mar 26, 2026", originalDate: "Mar 24, 2026", color: "secondary" },
   { event: "Grand Finale", date: "Mar 28, 2026", color: "primary" },
 ];

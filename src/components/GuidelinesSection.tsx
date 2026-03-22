@@ -42,7 +42,6 @@ const GuidelinesSection = () => {
           <p className="mt-3">All teams should complete their registration and upload the files through the registration form within the specified timeline. (<a href="https://forms.gle/259zjaLWZGnamYa7A" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">Registration form</a>)</p>
           <ul className="list-disc ml-5 mt-2">
             <li>Registration Start Date: <span className="text-primary font-semibold">01.03.2026</span></li>
-            <li>Idea Submission Deadline: <span className="text-primary font-semibold">20.03.2026</span></li>
           </ul>
         </div>
       ),
@@ -54,8 +53,8 @@ const GuidelinesSection = () => {
           <p>All registered teams will present their idea in an online presentation. The meeting link will be shared via email.</p>
           <p className="mt-2">After the online presentations, shortlisted teams will be notified via email along with payment instructions for the Grand Finale.</p>
           <ul className="list-disc ml-5 mt-2">
-            <li>Online Presentation Dates: <span className="text-primary font-semibold">21.03.2026 &amp; 22.03.2026</span></li>
-            <li>Idea Confirmation Date: <span className="text-primary font-semibold">24.03.2026</span></li>
+            <li>Idea Submission Date: <span className="text-primary font-semibold">24.03.2026</span></li> 
+            <li>Shortlist Announcement: <span className="text-primary font-semibold">26.03.2026</span></li>
             <li>Grand Finale: <span className="text-primary font-semibold">28.03.2026</span></li>
           </ul>
         </div>
